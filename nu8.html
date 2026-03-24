@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NU8 - Socio Operativo B2B</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500;700;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --nu8-orange: #FF6B00; 
+            --nu8-black: #000000; 
+            --nu8-white: #FFFFFF; 
+        }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--nu8-black); 
+            color: var(--nu8-white); 
+            margin: 0; 
+            overflow-x: hidden; 
+        }
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
+        .text-contrast { color: var(--nu8-orange); }
+        .grid-industrial { 
+            display: grid; 
+            grid-template-columns: repeat(12, 1fr); 
+            height: 100vh; 
+            width: 100vw; 
+        }
+        .section-padding { padding: 60px 80px; }
+        .technical-line { 
+            height: 1px; 
+            background: linear-gradient(90deg, var(--nu8-orange) 0%, transparent 100%); 
+            width: 100%; 
+            margin: 25px 0; 
+        }
+        .huge-title { 
+            font-size: clamp(2.5rem, 8vw, 4.5rem); 
+            line-height: 1.05; 
+            letter-spacing: -0.04em; 
+        }
+        .meta-text { 
+            font-size: 0.7rem; 
+            font-weight: 500; 
+            letter-spacing: 0.4em; 
+            text-transform: uppercase; 
+            color: rgba(255,255,255,0.4); 
+        }
+        .card-industrial { 
+            padding: 24px; 
+            border: 1px solid rgba(255,255,255,0.08); 
+            background: rgba(255,255,255,0.01); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            cursor: pointer; 
+        }
+        .card-industrial:hover { 
+            border-color: var(--nu8-orange); 
+            background: rgba(255, 107, 0, 0.03); 
+            transform: translateY(-4px);
+        }
+        
+        .logo-container { 
+            display: flex; 
+            align-items: baseline; 
+            font-family: 'Montserrat', sans-serif; 
+            margin-bottom: 3.5rem; 
+            user-select: none; 
+        }
+        .logo-nu { color: var(--nu8-orange); font-size: 52px; font-weight: 800; letter-spacing: -3px; }
+        .logo-8 { color: var(--nu8-white); font-size: 72px; line-height: 1; margin-left: 2px; font-weight: 500; }
+        
+        .nav-btn { 
+            width: 45px; 
+            height: 45px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            background: rgba(255, 255, 255, 0.05); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 50%; 
+            color: white; 
+            font-size: 11px; 
+            font-weight: 900; 
+            transition: all 0.3s ease; 
+        }
+        .nav-btn:hover, .nav-btn.active { 
+            background: var(--nu8-orange); 
+            color: black; 
+            border-color: var(--nu8-orange); 
+        }
+        .porter-box { 
+            border-left: 4px solid var(--nu8-orange); 
+            padding: 15px 30px; 
+            background: rgba(255, 107, 0, 0.04); 
+            margin-top: 20px; 
+        }
+        
+        .photo-slot { 
+            aspect-ratio: 1/1; 
+            background: #0a0a0a; 
+            border: 1px solid rgba(255,255,255,0.05); 
+            position: relative; 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            transition: all 0.5s ease;
+        }
+        .photo-slot.revealed { border-color: var(--nu8-orange); }
+        .photo-img { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            opacity: 0; 
+            transition: opacity 0.8s ease; 
+        }
+        .photo-slot.revealed .photo-img { opacity: 0.5; }
+        .photo-info { 
+            position: relative; 
+            z-index: 10; 
+            text-align: center; 
+            padding: 10px; 
+            background: rgba(0,0,0,0.85); 
+            width: 100%; 
+            margin-top: auto; 
+            backdrop-filter: blur(5px);
+        }
+        
+        .infinity-symbol { display: inline-block; transform: rotate(90deg); font-family: 'Montserrat', sans-serif; font-weight: 500; color: var(--nu8-orange); position: relative; top: 2px; }
+        
+        @media (max-width: 1024px) { 
+            .grid-industrial { grid-template-columns: 1fr; height: auto; min-height: 100vh; overflow-y: auto; } 
+            .section-padding { padding: 40px 25px; } 
+            .huge-title { font-size: 2.8rem; } 
+            .col-span-12 { grid-column: span 12 / span 12; border: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const App = () => {
+            const [currentSlide, setCurrentSlide] = useState(1);
+            const [revealedPhotos, setRevealedPhotos] = useState(0);
+
+            const slides = [
+                {
+                    id: 1,
+                    title: "Núcleo de Producción",
+                    highlight: "Integral.",
+                    subtitle: "TU ALIADO OPERATIVO B2B",
+                    content: "Operador de producción para mercadeo. Resolvemos la ejecución, el control de proveedores y la optimización de procesos técnicos.",
+                    items: [
+                        { label: "Producción Gráfica", target: 5, icon: "🖼️" },
+                        { label: "Manufactura 3D", target: 4, icon: "📦" },
+                        { label: "Diseño y Desarrollo", target: 7, icon: "🖨️" }
+                    ],
+                    porter: "El B2B existe porque las empresas necesitan otros profesionales que entiendan sus reglas de juego para poder operar sin riesgos."
+                },
+                {
+                    id: 2,
+                    tag: "Impacto Real 🔴",
+                    title: "Implementación",
+                    highlight: "en Mercadeo.",
+                    subtitle: "EJECUCIÓN TODO-EN-UNO",
+                    content: "Brandeo de columnas, sombrillas, banderines, avisos, volantes e impresión gran formato.",
+                    gallery: [
+                        { label: "Columnas", img: "https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?auto=format&fit=crop&w=400" },
+                        { label: "Sombrillas", img: "https://images.unsplash.com/photo-1534349735944-2b3a6f7a268f?auto=format&fit=crop&w=400" },
+                        { label: "Banderines", img: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=400" },
+                        { label: "Avisos", img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=400" },
+                        { label: "Volantes", img: "https://images.unsplash.com/photo-1562654508-4d9213f8967b?auto=format&fit=crop&w=400" },
+                        { label: "Impresión", img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=400" }
+                    ]
+                },
+                {
+                    id: 3,
+                    tag: "Prueba de Valor",
+                    title: "Producción",
+                    highlight: "de Marca.",
+                    subtitle: "MERCH + OBJETOS",
+                    content: "Piezas personalizadas con acabados de alta precisión. Fidelidad Pantone 100% y acabados manuales de nivel premium.",
+                    items: [
+                        { label: "Trofeos Seguros Mundial", icon: "🏆" },
+                        { label: "Kits VIP / Bienvenida", icon: "🎁" },
+                        { label: "Objetos de Branding", icon: "🏷️" },
+                        { label: "Acabados Premium", icon: "✨" }
+                    ]
+                },
+                {
+                    id: 4,
+                    tag: "Ingeniería 3D 🔴",
+                    title: "3D: Herramienta",
+                    highlight: "+ Experiencia.",
+                    subtitle: "MANUFACTURA ADITIVA",
+                    content: "El 3D en NU8 es funcional. Si el mercado no ofrece la pieza que el mall necesita, nosotros la inventamos y producimos.",
+                    items: [
+                        { label: "Cargabolsas Ergonómicos", icon: "🛍️" },
+                        { label: "Alcancías Monumentales", icon: "💰" },
+                        { label: "Coleccionables de Marca", icon: "🧸" },
+                        { label: "Repuestos Técnicos", icon: "🔧" }
+                    ]
+                },
+                {
+                    id: 5,
+                    tag: "Continuidad 🔵",
+                    title: "Propuesta",
+                    highlight: "Continua.",
+                    subtitle: "MODELO MENSUAL (RETAINER)",
+                    content: "Un aliado permanente con respuesta inmediata en 24h para emergencias y requerimientos de producción flash.",
+                    items: [
+                        { label: "Fee Mensual Soporte", icon: "📅" },
+                        { label: "Mantenimiento Gráfico", icon: "🛠️" },
+                        { label: "Piezas 3D Recurrentes", icon: "📦" },
+                        { label: "Gestión de Montajes", icon: "🏗️" }
+                    ]
+                },
+                {
+                    id: 7,
+                    tag: "Transparencia 🔵",
+                    title: "Estructura",
+                    highlight: "de Precios.",
+                    subtitle: "TARIFARIO B2B",
+                    content: "Costos competitivos basados en volumen y fidelidad. Sin fricción administrativa ni sobrecostos ocultos.",
+                    items: [
+                        { label: "Producción 3D / Unidad", icon: "💵" },
+                        { label: "Gran Formato / m2", icon: "📐" },
+                        { label: "Montaje / Cuadrilla", icon: "👷" },
+                        { label: "Merch / Volumen", icon: "📦" }
+                    ]
+                },
+                {
+                    id: 8,
+                    tag: "Cierre 🔴",
+                    title: "¿Qué proyecto",
+                    highlight: "tienes hoy?",
+                    subtitle: "VALIDACIÓN + CIERRE",
+                    content: "Estamos listos para materializar su estrategia ahora mismo. (Preguntar por su mascota para cierre emocional).",
+                    items: [
+                        { label: "Línea Directa 24/7", icon: "📞" },
+                        { label: "Cotización < 24h", icon: "⏱️" },
+                        { label: "Control de Calidad", icon: "✅" },
+                        { label: "Entrega en Ceros", icon: "🧹" }
+                    ]
+                }
+            ];
+
+            const slide = slides.find(s => s.id === currentSlide) || slides[0];
+
+            return (
+                <div className="grid-industrial relative bg-black">
+                    {/* Lado Izquierdo */}
+                    <div className="col-span-12 lg:col-span-7 section-padding flex flex-col justify-between border-r border-white/5 z-10">
+                        <header>
+                            <div className="logo-container">
+                                <span className="logo-nu">Nu</span>
+                                <span className="logo-8">8</span>
+                            </div>
+                        </header>
+
+                        <main key={currentSlide} className="transition-opacity duration-500">
+                            <div className="mb-4">
+                                <p className="meta-text text-contrast mb-2 tracking-[0.4em]">{slide.subtitle}</p>
+                                <h1 className="font-montserrat huge-title text-white uppercase">
+                                    <span style={{ fontWeight: 100 }}>{slide.title}</span> <br />
+                                    <span className="text-contrast" style={{ fontWeight: 500 }}>{slide.highlight}</span>
+                                </h1>
+                            </div>
+
+                            <div className="technical-line" />
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                <div className="space-y-4">
+                                    {currentSlide === 1 ? (
+                                        <div className="space-y-6">
+                                            <div>
+                                                <p className="text-sm font-bold tracking-widest text-white uppercase">NU = Núcleo</p>
+                                                <p className="text-[11px] text-white/40 uppercase font-bold mt-1 tracking-wider">Convergencia operativa total.</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm font-black tracking-widest text-white uppercase">
+                                                    <span className="infinity-symbol mr-2">8</span> = Energía
+                                                </p>
+                                                <p className="text-[11px] text-white/40 uppercase font-bold mt-1 tracking-wider">Ciclo de producción constante.</p>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <p className="text-[16px] text-white/70 leading-relaxed font-medium">{slide.content}</p>
+                                    )}
+                                </div>
+                                
+                                <div className="flex flex-col justify-end">
+                                    {currentSlide === 1 ? (
+                                        <div className="space-y-4">
+                                            <div className="porter-box">
+                                                <p className="text-[12px] font-medium text-white/80 italic leading-relaxed">"{slide.porter}"</p>
+                                                <p className="text-[11px] font-black text-contrast uppercase tracking-widest mt-4">— Michael Porter</p>
+                                            </div>
+                                            <div className="pt-4 opacity-50 text-white">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.2em] mb-1">311 535 92 53</p>
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.2em]">direccioncreativa@nuocho.com.co</p>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="p-4 border border-white/10 bg-white/5 rounded">
+                                            <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest text-center">Operación Activa</p>
+                                        </div>
+                                    )}
+                                    {currentSlide === 2 && (
+                                        <div className="p-5 border border-white/10 bg-white/5 rounded-lg mt-4">
+                                            <p className="text-[10px] font-bold text-contrast uppercase mb-3 tracking-widest text-center">Registro de Ejecución</p>
+                                            <div className="flex items-center justify-between gap-4">
+                                                <span className="text-3xl font-montserrat font-bold text-white/20">{revealedPhotos}/6</span>
+                                                <button 
+                                                    onClick={() => setRevealedPhotos(p => p < 6 ? p + 1 : 0)}
+                                                    className="flex-1 bg-orange-600 text-black text-[10px] font-black px-4 py-3 rounded uppercase tracking-tighter"
+                                                >
+                                                    {revealedPhotos === 6 ? 'Reiniciar' : 'Revelar Siguiente'}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </main>
+
+                        <footer className="mt-8 opacity-20">
+                            <div className="text-[11px] font-black text-white uppercase tracking-[0.6em]">nu8 estudio — 2026</div>
+                        </footer>
+                    </div>
+
+                    {/* Lado Derecho */}
+                    <div className="col-span-12 lg:col-span-5 bg-[#050505] flex flex-col z-10 border-l border-white/5 min-h-[450px]">
+                        <div className="flex-1 section-padding flex flex-col justify-center">
+                            {currentSlide === 1 ? (
+                                <div className="grid grid-cols-1 gap-4">
+                                    {slide.items.map((item, idx) => (
+                                        <div key={idx} onClick={() => setCurrentSlide(item.target)} className="card-industrial h-32">
+                                            <div className="text-contrast text-3xl mb-2">{item.icon}</div>
+                                            <p className="font-bold text-[12px] uppercase tracking-widest text-white">{item.label}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : currentSlide === 2 ? (
+                                <div className="grid grid-cols-2 gap-3" onClick={() => setRevealedPhotos(p => p < 6 ? p + 1 : 0)}>
+                                    {slide.gallery.map((item, idx) => (
+                                        <div key={idx} className={`photo-slot ${idx < revealedPhotos ? 'revealed' : 'opacity-10'}`}>
+                                            {idx < revealedPhotos && <img src={item.img} className="photo-img" />}
+                                            {idx < revealedPhotos ? (
+                                                <div className="photo-info animate-in fade-in duration-500">
+                                                    <p className="text-[10px] font-black text-white uppercase tracking-widest">{item.label}</p>
+                                                    <p className="text-[8px] text-orange-500 mt-1 uppercase font-bold tracking-widest">Ejecución Real</p>
+                                                </div>
+                                            ) : (
+                                                <div className="text-white/20 text-3xl font-light">+</div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-1 gap-4">
+                                    {slide.items && slide.items.map((item, idx) => (
+                                        <div key={idx} className="card-industrial h-24">
+                                            <div className="flex justify-between items-center">
+                                                <p className="font-bold text-[11px] uppercase tracking-widest text-white">{item.label}</p>
+                                                <span className="text-2xl">{item.icon}</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                        <div className="h-[20%] bg-black border-t border-white/5 p-12 flex flex-col justify-center opacity-40">
+                            <p className="text-[11px] font-bold uppercase tracking-[0.8em] text-center">Materializamos Estrategias</p>
+                        </div>
+                    </div>
+
+                    {/* Navegación Fija */}
+                    <div className="fixed bottom-10 right-10 flex gap-3 z-50">
+                        {[1, 2, 3, 4, 5, 7, 8].map(num => (
+                            <button 
+                                key={num} 
+                                onClick={() => { setCurrentSlide(num); setRevealedPhotos(0); }} 
+                                className={`nav-btn ${currentSlide === num ? 'active' : ''}`}
+                            >
+                                {num}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
