@@ -1,295 +1,168 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Settings, 
-  Layers, 
-  Zap, 
-  Clock, 
-  ShieldCheck, 
-  MessageSquare, 
-  Maximize2, 
-  X, 
-  ChevronRight, 
-  ChevronLeft, 
-  Printer, 
-  Package, 
-  Trophy, 
-  PlayCircle, 
-  AlertCircle,
-  Image as ImageIcon 
-} from 'lucide-react';
-
-const App = () => {
-  const [currentSlide, setCurrentSlide] = useState(1);
-  const [selectedIndex, setSelectedIndex] = useState(null);
-  const [videoError, setVideoError] = useState(false);
-  const [brokenResources, setBrokenResources] = useState({});
-  
-  const videoRef = useRef(null);
-  
-  const RAW_BASE = "https://raw.githubusercontent.com/nuocho/nu8/main/";
-  const VIDEO_CDN = "https://cdn.jsdelivr.net/gh/nuocho/nu8@main/";
-
-  // --- RECURSOS SLIDE 2 ---
-  const slide2Resources = [
-    { id: "p1", type: "image", src: "https://raw.githubusercontent.com/nuocho/nu8/432fb5445b78527132cbe9455370d98311286c3c/PROTOTIPADO.PNG", label: "PROTOTIPADO", category: "PROTOTIPADO RÁPIDO" },
-    { id: "v1", type: "video", src: VIDEO_CDN + "3D_ITS.mp4", label: "ITS", category: "VIDEOS" },
-    { id: "v2", type: "video", src: VIDEO_CDN + "3D_MAX.mp4", label: "MAX", category: "VIDEOS" },
-    { id: "r1", type: "image", src: RAW_BASE + "3d_calendarios.jpg", label: "CALENDARIOS", category: "RENDERS" },
-    { id: "r2", type: "image", src: RAW_BASE + "3d_embudos.jpg", label: "EMBUDOS", category: "RENDERS" },
-    { id: "r3", type: "image", src: RAW_BASE + "3d_faroles.jpg", label: "FAROLES", category: "RENDERS" },
-    { id: "r4", type: "image", src: RAW_BASE + "3d_max_cori.jpg", label: "MAX CORI", category: "RENDERS" },
-    { id: "r5", type: "image", src: RAW_BASE + "3d_sensodyne.jpg", label: "SENSODYNE", category: "RENDERS" },
-    { id: "r6", type: "image", src: RAW_BASE + "3d_texto.jpg", label: "TEXTO", category: "RENDERS" },
-    { id: "r7", type: "image", src: RAW_BASE + "acabado_pieza.jpg", label: "ACABADO PIEZA", category: "RENDERS" }
-  ];
-
-  // --- RECURSOS SLIDE 3 ---
-  const slide3Resources = [
-    { id: "b1", type: "image", src: RAW_BASE + "BTL1.JPG", label: "SOMBRILLAS", category: "BTL" },
-    { id: "b2", type: "image", src: RAW_BASE + "BTL2.jpeg", label: "SOMBRILLAS BRANDING", category: "BTL" },
-    { id: "b3", type: "image", src: RAW_BASE + "BTL3.jpeg", label: "BRANDING COLUMNAS", category: "BTL" },
-    { id: "b4", type: "image", src: RAW_BASE + "BTL4.PNG", label: "BRANDING ARAUCO", category: "BTL" },
-    { id: "b5", type: "image", src: RAW_BASE + "BTL6.PNG", label: "SACOS NAVIDEÑOS", category: "BTL" },
-    { id: "b6", type: "image", src: RAW_BASE + "BTL6.jpeg", label: "BANDERINES", category: "BTL" },
-    { id: "sm_c", type: "image", src: RAW_BASE + "SM_Camisas.JPG", label: "CAMISAS", category: "SEGUROS MUNDIAL" },
-    { id: "sm_m", type: "image", src: RAW_BASE + "SM_medallas.PNG", label: "MEDALLAS", category: "SEGUROS MUNDIAL" },
-    { id: "sm_p", type: "image", src: RAW_BASE + "SM_pines.PNG", label: "PINES", category: "SEGUROS MUNDIAL" },
-    { id: "sm_pm", type: "image", src: RAW_BASE + "SM_pinesmetalicos.PNG", label: "PINES METÁLICOS", category: "SEGUROS MUNDIAL" },
-    { id: "sm_r", type: "image", src: RAW_BASE + "SM_reconocimientos.PNG", label: "RECONOCIMIENTOS", category: "SEGUROS MUNDIAL" },
-    { id: "sm_t", type: "image", src: RAW_BASE + "SM_trofeos.PNG", label: "TROFEOS", category: "SEGUROS MUNDIAL" }
-  ];
-
-  const activeResources = currentSlide === 2 ? slide2Resources : (currentSlide === 3 ? slide3Resources : []);
-
-  useEffect(() => {
-    setVideoError(false);
-  }, [selectedIndex, currentSlide]);
-
-  const handleResourceError = (id) => {
-    setBrokenResources(prev => ({ ...prev, [id]: true }));
-  };
-
-  // Slides re-numerados (se eliminó el anterior ID 4)
-  const slides = [
-    { id: 1, title: "Núcleo de Producción", highlight: "Integral.", subtitle: "TU ALIADO OPERATIVO B2B", items: [{ label: "Producción Gráfica", target: 3, icon: <Layers size={24} /> }, { label: "Manufactura 3D", target: 2, icon: <Printer size={24} /> }, { label: "Diseño y Desarrollo", target: 4, icon: <Settings size={24} /> }], porter: "El B2B existe porque las empresas necesitan profesionales que entiendan sus reglas de juego para operar sin riesgos." },
-    { id: 2, tag: "Ingeniería 3D", title: "3D: Herramienta", highlight: "+ Experiencia.", subtitle: "DIFERENCIAL TÉCNICO", content: "Capacidad de respuesta industrial con acabados premium. Integramos modelado avanzado con manufactura de alta fidelidad para piezas que el mercado no ofrece.", items: [] },
-    { id: 3, tag: "Prueba de Valor", title: "Producción", highlight: "de Marca.", subtitle: "BTL + EXPERIENCIAS", content: "Ejecución técnica de activaciones y objetos de marca con acabados de nivel premium. Especialistas en transformar renders complejos en realidades tangibles.", items: [] },
-    { id: 4, tag: "Transparencia", title: "Estructura", highlight: "de Precios.", subtitle: "TARIFARIO B2B", content: "Costos competitivos basados en volumen y fidelidad. Eliminamos la fricción administrativa y los sobrecostos ocultos de las agencias tradicionales.", items: [] },
-    { id: 5, tag: "Cierre", title: "¿Qué proyecto", highlight: "tienes hoy?", subtitle: "VALIDACIÓN + CIERRE", content: "Estamos listos para materializar su estrategia. Díganos qué necesita y entregamos una ruta de ejecución técnica en menos de 24 horas.", items: [] }
-  ];
-
-  const currentSlideData = slides.find(s => s.id === currentSlide) || slides[0];
-
-  const nextSlide = () => {
-    if (currentSlide < slides.length) setCurrentSlide(currentSlide + 1);
-  };
-
-  const handleNextResource = (e) => { e.stopPropagation(); setSelectedIndex((prev) => (prev + 1) % activeResources.length); };
-  const handlePrevResource = (e) => { e.stopPropagation(); setSelectedIndex((prev) => (prev - 1 + activeResources.length) % activeResources.length); };
-
-  return (
-    <div className="min-h-screen bg-black text-white font-sans selection:bg-orange-600 overflow-x-hidden">
-      <style>{`
-        @keyframes entranceSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes subtlePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
-        .animate-entrance { animation: entranceSlide 0.8s ease-out forwards; }
-        .animate-pulse-slow { animation: subtlePulse 3.5s ease-in-out infinite 0.8s; }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 107, 0, 0.3); border-radius: 10px; }
-      `}</style>
-
-      <div className="fixed inset-0 pointer-events-none opacity-20">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-orange-600/10 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-orange-600 via-transparent to-transparent"></div>
-      </div>
-
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 min-h-screen">
-        
-        {/* Left Section */}
-        <div className="lg:col-span-7 p-8 md:p-16 flex flex-col justify-between border-r border-white/5 bg-black/50 backdrop-blur-sm">
-          <header className="mb-6">
-            <div className="flex items-baseline group cursor-pointer select-none" onClick={() => setCurrentSlide(1)}>
-              <span className="text-3xl font-black tracking-tighter text-orange-500 group-hover:brightness-110 transition-all">nuocho</span>
-              <span className="text-3xl font-light tracking-tighter text-white/90">estudio</span>
-            </div>
-          </header>
-
-          <main className="animate-in fade-in slide-in-from-left-4 duration-700 flex-1 flex flex-col justify-center">
-            <div className="mb-2">
-              <span className="text-[10px] font-black tracking-[0.4em] text-orange-500 uppercase py-1 px-3 border border-orange-500/30 rounded-full bg-orange-500/5">
-                {currentSlideData.subtitle}
-              </span>
-            </div>
-            <h1 className="text-5xl md:text-7xl font-black uppercase leading-[0.9] tracking-tighter mb-8">
-              <span className="font-thin block">{currentSlideData.title}</span>
-              <span className="text-orange-500">{currentSlideData.highlight}</span>
-            </h1>
-            <div className="h-px w-full bg-gradient-to-r from-orange-500 to-transparent mb-10 opacity-50" />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-              <div className="space-y-6">
-                {currentSlide !== 1 && <p className="text-lg text-gray-400 leading-relaxed mb-6">{currentSlideData.content}</p>}
-                {currentSlide === 1 && (
-                  <div className="grid grid-cols-1 gap-6 pt-4 border-t border-white/5">
-                    <div className="flex items-start gap-4">
-                      <span className="text-2xl font-black text-orange-500 mt-1">NU</span>
-                      <div><p className="text-sm font-black uppercase tracking-widest text-white">NÚCLEO</p><p className="text-[11px] font-medium text-white/40 uppercase">Convergencia operativa total.</p></div>
-                    </div>
-                    <div className="flex items-start gap-4">
-                      <span className="text-3xl font-light text-orange-500 leading-none">∞</span>
-                      <div><p className="text-sm font-black uppercase tracking-widest text-white">ENERGÍA</p><p className="text-[11px] font-medium text-white/40 uppercase">Ciclo de producción constante.</p></div>
-                    </div>
-                    <div className="bg-orange-500/5 border-l-2 border-orange-500/40 p-5 my-4 opacity-60">
-                      <p className="text-[11px] italic text-gray-400 leading-relaxed">"{currentSlideData.porter}"</p>
-                      <p className="text-[9px] font-black text-orange-500/60 uppercase mt-3 tracking-widest">— Michael Porter</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div className="space-y-4">
-                {currentSlide === 1 ? [
-                  { label: "Producción Gráfica", target: 3, icon: <Layers size={24} /> },
-                  { label: "Manufactura 3D", target: 2, icon: <Printer size={24} /> },
-                  { label: "Diseño y Desarrollo", target: 4, icon: <Settings size={24} /> }
-                ].map((item, idx) => (
-                  <div key={idx} onClick={() => item.target && setCurrentSlide(item.target)} className="group p-4 border border-white/5 bg-white/5 rounded-xl flex items-center justify-between transition-all hover:border-orange-500/50 hover:bg-orange-500/5 cursor-pointer">
-                    <div className="flex items-center gap-4"><span className="text-orange-500 group-hover:scale-110 transition-transform">{item.icon}</span><span className="text-[11px] font-bold uppercase tracking-widest">{item.label}</span></div>
-                    <ChevronRight size={16} className="text-gray-600 group-hover:text-orange-500" />
-                  </div>
-                )) : currentSlide === 4 ? [
-                  { label: "Producción 3D / Unidad", icon: <Printer size={20} /> }, { label: "Gran Formato / m2", icon: <Layers size={20} /> }, { label: "Montaje / Cuadrilla", icon: <Settings size={20} /> }, { label: "Logística Nacional", icon: <Package size={20} /> }
-                ].map((item, idx) => (
-                  <div key={idx} className="group p-4 border border-white/5 bg-white/5 rounded-xl flex items-center gap-4 transition-all">
-                    <span className="text-orange-500">{item.icon}</span>
-                    <span className="text-[11px] font-bold uppercase tracking-widest">{item.label}</span>
-                  </div>
-                )) : currentSlide === 5 ? [
-                  { label: "Línea Directa 24/7", icon: <MessageSquare size={20} /> }, { label: "Cotización Express", icon: <Clock size={20} /> }, { label: "Control de Calidad", icon: <ShieldCheck size={20} /> }, { label: "Entrega en Ceros", icon: <Zap size={20} /> }
-                ].map((item, idx) => (
-                  <div key={idx} className="group p-4 border border-white/5 bg-white/5 rounded-xl flex items-center gap-4 transition-all">
-                    <span className="text-orange-500">{item.icon}</span>
-                    <span className="text-[11px] font-bold uppercase tracking-widest">{item.label}</span>
-                  </div>
-                )) : null}
-              </div>
-            </div>
-          </main>
-
-          <footer className="mt-8 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-end md:items-center gap-6">
-            <div className="flex flex-col md:flex-row gap-8 text-white/30 w-full md:w-auto">
-              <a href="https://wa.me/573115359253" target="_blank" rel="noopener noreferrer" className="flex flex-col group cursor-pointer">
-                <span className="text-[7px] font-black uppercase tracking-[0.4em] mb-1 text-orange-500/40 group-hover:text-orange-500 transition-colors">WhatsApp Directo</span>
-                <span className="text-[10px] font-bold tracking-[0.2em] group-hover:text-white transition-colors">311 535 92 53</span>
-              </a>
-              <a href="mailto:direccioncreativa@nuocho.com.co" className="flex flex-col group cursor-pointer">
-                <span className="text-[7px] font-black uppercase tracking-[0.4em] mb-1 text-orange-500/40 group-hover:text-orange-500 transition-colors">E-mail Corporativo</span>
-                <span className="text-[10px] font-bold tracking-[0.2em] group-hover:text-white transition-colors">direccioncreativa@nuocho.com.co</span>
-              </a>
-            </div>
-            <div className="opacity-20 text-[9px] font-black uppercase tracking-[0.6em] text-right whitespace-nowrap">nu8 estudio — 2026</div>
-          </footer>
-        </div>
-
-        {/* Right Section */}
-        <div className="lg:col-span-5 bg-[#080808] flex flex-col border-l border-white/5 relative overflow-hidden">
-          {(currentSlide === 2 || currentSlide === 3) ? (
-            <div className="h-full p-8 overflow-y-auto custom-scrollbar">
-              <div className="max-w-md mx-auto space-y-12 pb-24">
-                {Array.from(new Set(activeResources.map(r => r.category))).map((cat, sIdx) => (
-                  <section key={sIdx}>
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-500 mb-6 flex items-center gap-2">
-                      <span className="w-4 h-px bg-orange-500"></span> {cat}
-                    </h3>
-                    <div className="grid grid-cols-2 gap-3">
-                      {activeResources.filter(r => r.category === cat).map((item) => {
-                        const globalIdx = activeResources.indexOf(item);
-                        const isBroken = brokenResources[item.id];
-                        return (
-                          <button key={item.id} onClick={() => setSelectedIndex(globalIdx)} className={`group relative aspect-video bg-black border border-white/10 rounded-lg transition-all hover:border-orange-500 hover:bg-orange-500/[0.05] hover:-translate-y-1 active:scale-95 shadow-xl overflow-hidden ${item.type === 'video' ? 'flex flex-col items-center justify-center p-6 text-center' : ''}`}>
-                            {item.type === 'video' ? (
-                              <><PlayCircle size={24} className="text-orange-500 mb-3 opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all" /><span className="block text-[10px] font-black text-white/80 uppercase tracking-widest">{item.label}</span></>
-                            ) : (
-                              <>
-                                {!isBroken ? (
-                                  <img src={item.src} alt={item.label} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" onError={() => handleResourceError(item.id)} />
-                                ) : (
-                                  <div className="w-full h-full flex flex-col items-center justify-center bg-white/[0.02] text-white/10"><ImageIcon size={20} className="mb-2" /><span className="text-[8px] font-bold uppercase tracking-widest text-center px-2">Preview Técnico</span></div>
-                                )}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-                                <span className="absolute bottom-2 left-3 block text-[9px] font-black text-white uppercase tracking-widest drop-shadow-md">{item.label}</span>
-                              </>
-                            )}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </section>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="h-full flex items-center justify-center p-12 relative">
-               <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#FF6B00 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
-               <div className="relative text-center">
-                  <div className="w-40 h-40 border border-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-10 animate-pulse">
-                    <div className="w-32 h-32 border border-orange-500/40 rounded-full flex items-center justify-center">
-                      <div className="w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center text-black font-black text-xl">{currentSlide}</div>
-                    </div>
-                  </div>
-                  <div className="overflow-hidden py-4">
-                    <p key={currentSlide} className={`text-[12px] md:text-[14px] font-black uppercase tracking-[1.2em] text-orange-500 ${currentSlide === 1 ? 'animate-entrance' : ''}`}>
-                      <span className={currentSlide === 1 ? 'inline-block animate-pulse-slow' : ''}>{currentSlide === 1 ? "PRECISIÓN OPERATIVA" : "Pipeline Operativo"}</span>
-                    </p>
-                  </div>
-               </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Navigation Bubble */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-black/80 backdrop-blur-xl p-2 rounded-full border border-white/10 z-50">
-        {[1, 2, 3, 4, 5].map(num => (
-          <button key={num} onClick={() => setCurrentSlide(num)} className={`w-10 h-10 rounded-full flex items-center justify-center text-[10px] font-black transition-all ${currentSlide === num ? 'bg-orange-500 text-black scale-110 shadow-lg shadow-orange-500/20' : 'text-gray-500 hover:text-white'}`}>0{num}</button>
-        ))}
-        <div className="w-px h-6 bg-white/10 mx-2" />
-        <button onClick={nextSlide} disabled={currentSlide === 5} className="pr-4 pl-2 py-2 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest disabled:opacity-20 group">
-          Siguiente <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
-        </button>
-      </div>
-
-      {/* Visualizador Modal */}
-      {selectedIndex !== null && activeResources.length > 0 && (
-        <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-6 animate-in fade-in duration-300" onClick={() => setSelectedIndex(null)}>
-          <button onClick={handlePrevResource} className="absolute left-4 lg:left-12 p-4 text-white/30 hover:text-orange-500 hover:scale-110 transition-all z-20"><ChevronLeft size={48} /></button>
-          <div className="relative bg-[#0a0a0a] border border-white/10 rounded-2xl p-4 max-w-4xl w-full flex flex-col items-center animate-in zoom-in-95 duration-300 shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <div className="w-full flex justify-between items-center mb-4 px-2">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/50">{activeResources[selectedIndex].label}</span>
-              <button onClick={() => setSelectedIndex(null)} className="p-2 hover:bg-orange-500 hover:text-black rounded-full transition-all"><X size={18} /></button>
-            </div>
-            <div className="w-full max-h-[65vh] flex items-center justify-center overflow-hidden rounded-xl bg-black relative min-h-[300px]">
-              {activeResources[selectedIndex].type === "video" ? (
-                videoError ? (<div className="text-center p-12"><AlertCircle size={48} className="text-orange-500/40 mb-4" /><p className="text-[11px] font-black uppercase tracking-widest text-white/40">No se pudo cargar el video</p></div>) :
-                (<video key={activeResources[selectedIndex].src} controls playsInline autoPlay={false} preload="metadata" crossOrigin="anonymous" className="max-w-full max-h-[65vh] rounded-lg shadow-inner" onError={() => setVideoError(true)}><source src={activeResources[selectedIndex].src} type="video/mp4" /></video>)
-              ) : (
-                !brokenResources[activeResources[selectedIndex].id] ? (
-                  <img src={activeResources[selectedIndex].src} alt={activeResources[selectedIndex].label} className="max-w-full max-h-[65vh] object-contain rounded-lg shadow-inner" />
-                ) : (
-                  <div className="flex flex-col items-center justify-center text-center p-20 text-white/20"><ImageIcon size={64} className="mb-6 opacity-10" /><p className="text-xs font-black uppercase tracking-widest">Recurso en fase técnica</p><p className="text-[8px] mt-2 text-white/10 font-bold uppercase tracking-[0.4em]">{activeResources[selectedIndex].label}</p></div>
-                )
-              )}
-            </div>
-            <div className="mt-4 pt-4 border-t border-white/5 w-full flex justify-between items-center px-4">
-              <span className="text-[9px] font-bold text-orange-500 uppercase tracking-widest">NU8 Visualización Técnica</span>
-              <span className="text-[9px] font-bold text-white/20">{selectedIndex + 1} / {activeResources.length}</span>
-            </div>
-          </div>
-          <button onClick={handleNextResource} className="absolute right-4 lg:right-12 p-4 text-white/30 hover:text-orange-500 hover:scale-110 transition-all z-20"><ChevronRight size={48} /></button>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default App;
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="es"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;NU8 - Presentación Corporativa&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/react@18/umd/react.production.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/@babel/standalone/babel.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&amp;display=swap');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body { font-family: 'Inter', sans-serif; background: #000; color: #fff; overflow: hidden; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slide-enter { animation: fadeIn 0.5s ease-out forwards; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="root"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script type="text/babel"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const { useState } = React;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const App = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const [currentSlide, setCurrentSlide] = useState(0);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const slides = [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// SLIDE 1: MARCA</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>content: (</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="flex flex-col items-center justify-center h-full text-center slide-enter"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h1 className="text-8xl font-black tracking-tighter mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>NU&lt;span className="text-blue-500"&gt;8&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div className="flex gap-8 text-sm tracking-[0.3em] uppercase opacity-60"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span&gt;NU = NÚCLEO&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span&gt;∞ = ENERGÍA&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p className="mt-12 text-xl font-light max-w-2xl"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>Experiencias visuales, producción real y soluciones creativas para grandes marcas.</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// SLIDE 2: PROTOTIPADO Y MEDIOS</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>content: (</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="p-12 h-full slide-enter"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h2 className="text-4xl font-bold mb-8 border-l-4 border-blue-500 pl-4 uppercase tracking-wider"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>Prototipado Rápido &amp; Ejecución</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div className="grid grid-cols-3 gap-6 h-[70%]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>{/* PROTOTIPADO RÁPIDO */}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;h3 className="text-blue-400 font-bold mb-4 uppercase text-xs tracking-widest"&gt;01. Prototipado Rápido&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;img<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>src="https://cdn.jsdelivr.net/gh/nuocho/nu8@main/ACABADO%20DE%20PIEZA.jpeg"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>className="w-full h-48 object-cover rounded-lg mb-4 hover:scale-105 transition-transform"</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>alt="Acabado"</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-sm opacity-70"&gt;Modelado 3D e impresión de alta precisión para validación de merchandising y POP.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>{/* VIDEOS */}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;h3 className="text-blue-400 font-bold mb-4 uppercase text-xs tracking-widest"&gt;02. Videos &amp; Activaciones&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;video<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>controls autoPlay muted loop</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>className="w-full h-48 object-cover rounded-lg mb-4"</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>src="https://cdn.jsdelivr.net/gh/nuocho/nu8@204a63faf86fab4807fc87d656103d0886b6edc0/3D_FAROLES.mp4"</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-sm opacity-70"&gt;Instalaciones cinéticas y contenido digital para centros comerciales.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>{/* RENDERS */}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;h3 className="text-blue-400 font-bold mb-4 uppercase text-xs tracking-widest"&gt;03. Renders &amp; 3D&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;img<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>src="https://cdn.jsdelivr.net/gh/nuocho/nu8@main/3D_SENSODYNE.jpeg"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>className="w-full h-48 object-cover rounded-lg mb-4 opacity-80"</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>alt="Render"</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-sm opacity-70"&gt;Visualización de alto impacto para Seguros Mundial, Primax y Parque Arauco.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="relative h-screen w-screen overflow-hidden bg-black text-white"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{/* Header Persistente / Logo */}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;nav className="absolute top-0 w-full p-8 flex justify-between items-center z-50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>onClick={() =&gt; setCurrentSlide(0)}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>className="text-xl font-black tracking-tighter hover:text-blue-500 transition-colors uppercase"</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>nuochoestudio</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="text-[10px] tracking-[0.5em] opacity-40 uppercase"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>Slide {currentSlide + 1} / {slides.length}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/nav&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{/* Contenido de la Diapositiva */}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;main className="h-full w-full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{slides[currentSlide].content}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{/* Navegación y Contacto Persistente */}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;footer className="absolute bottom-0 w-full p-8 flex justify-between items-end z-50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="flex gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;button<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>onClick={() =&gt; setCurrentSlide(prev =&gt; Math.max(0, prev - 1))}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>className="p-3 border border-zinc-800 rounded-full hover:bg-white hover:text-black transition-all"</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;i className="fas fa-chevron-left"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;button<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>onClick={() =&gt; setCurrentSlide(prev =&gt; Math.min(slides.length - 1, prev + 1))}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>className="p-3 border border-zinc-800 rounded-full hover:bg-white hover:text-black transition-all"</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;i className="fas fa-chevron-right"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{/* BLOQUE DE CONTACTO - SIEMPRE VISIBLE */}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="flex flex-col items-end gap-2 bg-black/50 backdrop-blur-md p-4 rounded-xl border border-zinc-800/50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;a<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>href="https://wa.me/573115359253"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>target="_blank"</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>className="flex items-center gap-3 text-sm font-bold hover:text-green-400 transition-colors"</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;i className="fab fa-whatsapp text-lg"&gt;&lt;/i&gt; 311 535 92 53</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;a<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>href="mailto:direccioncreativa@nuocho.com.co"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>className="flex items-center gap-3 text-xs opacity-70 hover:opacity-100 hover:text-blue-400 transition-colors"</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;i className="far fa-envelope"&gt;&lt;/i&gt; direccioncreativa@nuocho.com.co</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/footer&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const root = ReactDOM.createRoot(document.getElementById('root'));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>root.render(&lt;App /&gt;);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
