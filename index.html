@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #b76ff7; -webkit-text-stroke: #b76ff7; background-color: #171818}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #b76ff7; -webkit-text-stroke: #b76ff7; background-color: #171818; min-height: 16.0px}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="es"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;NU8 - Presentación B2B&lt;/title&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/react@18/umd/react.production.min.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/@babel/standalone/babel.min.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/lucide@latest"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/lucide-react"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;style&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&amp;display=swap');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>body { font-family: 'Inter', sans-serif; background: #000; margin:0; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.custom-scrollbar::-webkit-scrollbar { width: 4px; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 107, 0, 0.3); border-radius: 10px; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>@keyframes entranceSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.animate-entrance { animation: entranceSlide 0.8s ease-out forwards; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="root"&gt;&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script type="text/babel"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Extraemos los iconos de LucideReact</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const {<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>Settings, Layers, Zap, Clock, ShieldCheck, MessageSquare,<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>Maximize2, X, ChevronRight, ChevronLeft, Printer, Package,<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>Trophy, PlayCircle, AlertCircle, Image: ImageIcon<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>} = LucideReact;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const { useState, useEffect, useRef } = React;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const App = () =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const [currentSlide, setCurrentSlide] = useState(1);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const [selectedIndex, setSelectedIndex] = useState(null);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const [videoError, setVideoError] = useState(false);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const [brokenResources, setBrokenResources] = useState({});</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const RAW_BASE = "https://raw.githubusercontent.com/nuocho/nu8/main/";</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const VIDEO_CDN = "https://cdn.jsdelivr.net/gh/nuocho/nu8@main/";</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const slide2Resources = [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ id: "p1", type: "image", src: "https://raw.githubusercontent.com/nuocho/nu8/432fb5445b78527132cbe9455370d98311286c3c/PROTOTIPADO.PNG", label: "PROTOTIPADO", category: "PROTOTIPADO RÁPIDO" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ id: "v1", type: "video", src: VIDEO_CDN + "3D_ITS.mp4", label: "ITS", category: "VIDEOS" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ id: "v2", type: "video", src: VIDEO_CDN + "3D_MAX.mp4", label: "MAX", category: "VIDEOS" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ id: "r1", type: "image", src: RAW_BASE + "3d_calendarios.jpg", label: "CALENDARIOS", category: "RENDERS" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ id: "r2", type: "image", src: RAW_BASE + "3d_embudos.jpg", label: "EMBUDOS", category: "RENDERS" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ id: "r3", type: "image", src: RAW_BASE + "3d_faroles.jpg", label: "FAROLES", category: "RENDERS" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ id: "r4", type: "image", src: RAW_BASE + "3d_max_cori.jpg", label: "MAX CORI", category: "RENDERS" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ id: "</span></p>
+</body>
+</html>
