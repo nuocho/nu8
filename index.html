@@ -8,135 +8,130 @@
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide-react"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background: #000; color: #fff; margin: 0; overflow-x: hidden; }
-        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background: #000; margin:0; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #f97316; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 107, 0, 0.3); border-radius: 10px; }
+        @keyframes entranceSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes subtlePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+        .animate-entrance { animation: entranceSlide 0.8s ease-out forwards; }
+        .animate-pulse-slow { animation: subtlePulse 3.5s ease-in-out infinite 0.8s; }
     </style>
 </head>
 <body>
-    <div id="root">
-        <div style="background:black; color:#333; height:100vh; display:flex; items-center; justify-content:center; font-size:10px; letter-spacing:5px;">CARGANDO NU8...</div>
-    </div>
+    <div id="root"></div>
 
     <script type="text/babel">
-        const { useState } = React;
+        // Extraemos los iconos de LucideReact
+        const { 
+            Settings, Layers, Zap, Clock, ShieldCheck, MessageSquare, 
+            X, ChevronRight, ChevronLeft, Printer, PlayCircle, AlertCircle, Image: ImageIcon 
+        } = LucideReact;
+
+        const { useState, useEffect, useRef } = React;
 
         const App = () => {
             const [currentSlide, setCurrentSlide] = useState(1);
+            const [selectedIndex, setSelectedIndex] = useState(null);
+            const [videoError, setVideoError] = useState(false);
+            const [brokenResources, setBrokenResources] = useState({});
             
             const RAW_BASE = "https://raw.githubusercontent.com/nuocho/nu8/main/";
             const VIDEO_CDN = "https://cdn.jsdelivr.net/gh/nuocho/nu8@main/";
 
             const slide2Resources = [
-                { id: "p1", type: "image", src: "https://raw.githubusercontent.com/nuocho/nu8/432fb5445b78527132cbe9455370d98311286c3c/PROTOTIPADO.PNG", label: "PROTOTIPADO", category: "INGENIERÍA 3D" },
-                { id: "v1", type: "video", src: VIDEO_CDN + "3D_ITS.mp4", label: "PROYECTO ITS", category: "VIDEOS" },
+                { id: "p1", type: "image", src: "https://raw.githubusercontent.com/nuocho/nu8/432fb5445b78527132cbe9455370d98311286c3c/PROTOTIPADO.PNG", label: "PROTOTIPADO", category: "PROTOTIPADO RÁPIDO" },
+                { id: "v1", type: "video", src: VIDEO_CDN + "3D_ITS.mp4", label: "ITS", category: "VIDEOS" },
+                { id: "v2", type: "video", src: VIDEO_CDN + "3D_MAX.mp4", label: "MAX", category: "VIDEOS" },
+                { id: "r1", type: "image", src: RAW_BASE + "3d_calendarios.jpg", label: "CALENDARIOS", category: "RENDERS" },
                 { id: "r5", type: "image", src: RAW_BASE + "3d_sensodyne.jpg", label: "SENSODYNE", category: "RENDERS" },
-                { id: "r7", type: "image", src: RAW_BASE + "acabado_pieza.jpg", label: "ACABADO TÉCNICO", category: "PRODUCCIÓN" }
+                { id: "r7", type: "image", src: RAW_BASE + "acabado_pieza.jpg", label: "ACABADO PIEZA", category: "RENDERS" }
             ];
 
             const slide3Resources = [
                 { id: "b1", type: "image", src: RAW_BASE + "BTL1.JPG", label: "SOMBRILLAS", category: "BTL" },
-                { id: "b4", type: "image", src: RAW_BASE + "BTL4.PNG", label: "MARCA ARAUCO", category: "RETAIL" },
-                { id: "sm_t", type: "image", src: RAW_BASE + "SM_trofeos.PNG", label: "TROFEOS", category: "MERCHANDISING" }
+                { id: "b4", type: "image", src: RAW_BASE + "BTL4.PNG", label: "BRANDING ARAUCO", category: "BTL" },
+                { id: "sm_t", type: "image", src: RAW_BASE + "SM_trofeos.PNG", label: "TROFEOS", category: "SEGUROS MUNDIAL" }
             ];
 
             const activeResources = currentSlide === 2 ? slide2Resources : (currentSlide === 3 ? slide3Resources : []);
 
-            const slides = {
-                1: { title: "Núcleo de Producción", highlight: "Integral.", sub: "ALIADO OPERATIVO B2B", body: "El B2B requiere profesionales que entiendan la logística y el riesgo. En NU8 materializamos su visión con rigor técnico." },
-                2: { title: "Ingeniería", highlight: "3D.", sub: "DIFERENCIAL TÉCNICO", body: "Capacidad de respuesta industrial con acabados premium. Modelado avanzado y manufactura de alta fidelidad." },
-                3: { title: "Producción", highlight: "de Marca.", sub: "BTL + EXPERIENCIAS", body: "Ejecución técnica de activaciones. Especialistas en transformar renders complejos en realidades tangibles." },
-                4: { title: "Estructura", highlight: "de Precios.", sub: "TRANSPARENCIA B2B", body: "Costos competitivos basados en volumen. Eliminamos sobrecostos ocultos para agencias y marcas." },
-                5: { title: "¿Qué proyecto", highlight: "tienes hoy?", sub: "VALIDACIÓN + CIERRE", body: "Ruta de ejecución técnica en menos de 24 horas. Listos para operar." }
-            };
+            const slides = [
+                { id: 1, title: "Núcleo de Producción", highlight: "Integral.", subtitle: "TU ALIADO OPERATIVO B2B", porter: "El B2B existe porque las empresas necesitan profesionales que entiendan sus reglas de juego para operar sin riesgos." },
+                { id: 2, tag: "Ingeniería 3D", title: "3D: Herramienta", highlight: "+ Experiencia.", subtitle: "DIFERENCIAL TÉCNICO", content: "Capacidad de respuesta industrial con acabados premium. Integramos modelado avanzado con manufactura de alta fidelidad." },
+                { id: 3, tag: "Prueba de Valor", title: "Producción", highlight: "de Marca.", subtitle: "BTL + EXPERIENCIAS", content: "Ejecución técnica de activaciones y objetos de marca con acabados de nivel premium." },
+                { id: 4, tag: "Transparencia", title: "Estructura", highlight: "de Precios.", subtitle: "TARIFARIO B2B", content: "Costos competitivos basados en volumen y fidelidad. Eliminamos sobrecostos ocultos." },
+                { id: 5, tag: "Cierre", title: "¿Qué proyecto", highlight: "tienes hoy?", subtitle: "VALIDACIÓN + CIERRE", content: "Estamos listos para materializar su estrategia. Entregamos una ruta de ejecución técnica en menos de 24 horas." }
+            ];
 
-            const data = slides[currentSlide];
+            const currentSlideData = slides.find(s => s.id === currentSlide) || slides[0];
 
             return (
-                <div className="min-h-screen bg-black flex flex-col lg:grid lg:grid-cols-12">
-                    {/* IZQUIERDA: CONTENIDO */}
-                    <div className="lg:col-span-7 p-8 md:p-16 flex flex-col justify-between border-r border-white/5 bg-black/40 h-screen">
-                        <header className="cursor-pointer" onClick={() => setCurrentSlide(1)}>
-                            <div className="flex items-baseline">
-                                <span className="text-3xl font-black text-orange-500 uppercase tracking-tighter">nuocho</span>
-                                <span className="text-3xl font-light text-white uppercase tracking-tighter ml-1">estudio</span>
-                            </div>
-                        </header>
+                <div className="min-h-screen bg-black text-white font-sans selection:bg-orange-600 overflow-x-hidden">
+                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 min-h-screen">
+                        
+                        {/* Sección Izquierda */}
+                        <div className="lg:col-span-7 p-8 md:p-16 flex flex-col justify-between border-r border-white/5 bg-black/50 backdrop-blur-sm h-full">
+                            <header onClick={() => setCurrentSlide(1)} className="cursor-pointer">
+                                <span className="text-3xl font-black tracking-tighter text-orange-500 uppercase">nuocho</span>
+                                <span className="text-3xl font-light tracking-tighter text-white/90 uppercase">estudio</span>
+                            </header>
 
-                        <main className="fade-in py-12">
-                            <span className="text-[10px] font-black tracking-[0.4em] text-orange-500 border border-orange-500/30 px-3 py-1 rounded-full uppercase bg-orange-500/5 mb-6 inline-block">
-                                {data.sub}
-                            </span>
-                            <h1 className="text-6xl md:text-8xl font-black uppercase leading-[0.85] tracking-tighter mb-8">
-                                {data.title}<br/>
-                                <span className="text-orange-500">{data.highlight}</span>
-                            </h1>
-                            <div className="h-1 w-24 bg-orange-500 mb-8"></div>
-                            <p className="text-lg text-gray-400 leading-relaxed max-w-lg">
-                                {data.body}
-                            </p>
-                        </main>
-
-                        <footer className="pt-8 border-t border-white/5 flex flex-wrap gap-10">
-                            <a href="https://wa.me/573115359253" target="_blank" className="block group">
-                                <p className="text-[8px] font-black uppercase tracking-widest text-orange-500/50 mb-1 group-hover:text-orange-500 transition-colors">WhatsApp Directo</p>
-                                <p className="text-xs font-bold group-hover:text-white transition-colors">311 535 92 53</p>
-                            </a>
-                            <a href="mailto:direccioncreativa@nuocho.com.co" className="block group">
-                                <p className="text-[8px] font-black uppercase tracking-widest text-orange-500/50 mb-1 group-hover:text-orange-500 transition-colors">Email Corporativo</p>
-                                <p className="text-xs font-bold group-hover:text-white transition-colors">direccioncreativa@nuocho.com.co</p>
-                            </a>
-                        </footer>
-                    </div>
-
-                    {/* DERECHA: GALERÍA */}
-                    <div className="lg:col-span-5 bg-[#050505] border-l border-white/5 relative overflow-y-auto h-screen custom-scrollbar">
-                        <div className="p-8 pb-32 space-y-6">
-                            {activeResources.length > 0 ? (
-                                activeResources.map((item) => (
-                                    <div key={item.id} className="group relative aspect-video bg-black border border-white/10 rounded-xl overflow-hidden shadow-2xl transition-all hover:border-orange-500/50">
-                                        {item.type === 'video' ? (
-                                            <video src={item.src} autoPlay muted loop className="w-full h-full object-cover opacity-40 group-hover:opacity-100 transition-opacity" />
-                                        ) : (
-                                            <img src={item.src} className="w-full h-full object-cover opacity-40 group-hover:opacity-100 transition-opacity" />
-                                        )}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
-                                        <div className="absolute bottom-4 left-4">
-                                            <span className="text-[8px] text-orange-500 font-black uppercase tracking-widest block mb-1">{item.category}</span>
-                                            <span className="text-xs font-black uppercase tracking-widest">{item.label}</span>
+                            <main className="animate-entrance flex-1 flex flex-col justify-center">
+                                <div className="mb-2 w-fit">
+                                    <span className="text-[10px] font-black tracking-[0.4em] text-orange-500 uppercase py-1 px-3 border border-orange-500/30 rounded-full bg-orange-500/5">
+                                        {currentSlideData.subtitle}
+                                    </span>
+                                </div>
+                                <h1 className="text-5xl md:text-8xl font-black uppercase leading-[0.9] tracking-tighter mb-8">
+                                    <span className="font-thin block">{currentSlideData.title}</span>
+                                    <span className="text-orange-500">{currentSlideData.highlight}</span>
+                                </h1>
+                                <div className="h-px w-32 bg-orange-500 mb-10 opacity-50" />
+                                <p className="text-lg text-gray-400 leading-relaxed max-w-lg">
+                                    {currentSlide === 1 ? currentSlideData.porter : currentSlideData.content}
+                                </p>
+                                
+                                {currentSlide === 1 && (
+                                    <div className="grid grid-cols-2 gap-8 pt-8 border-t border-white/5 mt-10 max-w-md">
+                                        <div className="flex items-start gap-4">
+                                            <span className="text-2xl font-black text-orange-500 mt-1">NU</span>
+                                            <div><p className="text-sm font-black uppercase tracking-widest">NÚCLEO</p><p className="text-[11px] font-medium text-white/40 uppercase">Convergencia operativa.</p></div>
+                                        </div>
+                                        <div className="flex items-start gap-4">
+                                            <span className="text-3xl font-light text-orange-500 leading-none">∞</span>
+                                            <div><p className="text-sm font-black uppercase tracking-widest">ENERGÍA</p><p className="text-[11px] font-medium text-white/40 uppercase">Producción constante.</p></div>
                                         </div>
                                     </div>
-                                ))
-                            ) : (
-                                <div className="h-full flex items-center justify-center opacity-5 select-none pt-20">
-                                    <div className="text-[15rem] font-black tracking-tighter">{currentSlide}</div>
+                                )}
+                            </main>
+
+                            <footer className="mt-8 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-end sm:items-center gap-6 text-white/40">
+                                <div className="flex gap-8 w-full sm:w-auto">
+                                    <a href="https://wa.me/573115359253" target="_blank" className="flex flex-col group cursor-pointer">
+                                        <span className="text-[7px] font-black uppercase tracking-[0.4em] mb-1 text-orange-500/40 group-hover:text-orange-500 transition-colors">WhatsApp Directo</span>
+                                        <span className="text-[10px] font-bold group-hover:text-white transition-colors">311 535 92 53</span>
+                                    </a>
+                                    <a href="mailto:direccioncreativa@nuocho.com.co" className="flex flex-col group cursor-pointer">
+                                        <span className="text-[7px] font-black uppercase tracking-[0.4em] mb-1 text-orange-500/40 group-hover:text-orange-500 transition-colors">E-mail Corporativo</span>
+                                        <span className="text-[10px] font-bold group-hover:text-white transition-colors">direccioncreativa@nuocho.com.co</span>
+                                    </a>
                                 </div>
-                            )}
+                                <div className="opacity-20 text-[9px] font-black uppercase tracking-[0.6em] text-right whitespace-nowrap">nu8 estudio — 2026</div>
+                            </footer>
                         </div>
-                    </div>
 
-                    {/* NAVEGACIÓN */}
-                    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 bg-black/80 backdrop-blur-xl p-2 rounded-full border border-white/10 z-50">
-                        {[1, 2, 3, 4, 5].map(n => (
-                            <button 
-                                key={n} 
-                                onClick={() => setCurrentSlide(n)}
-                                className={`w-10 h-10 rounded-full font-black text-[10px] transition-all ${currentSlide === n ? 'bg-orange-500 text-black scale-110 shadow-lg shadow-orange-500/20' : 'text-zinc-600 hover:text-white'}`}
-                            >
-                                0{n}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            );
-        };
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
-</body>
-</html>
+                        {/* Sección Derecha: Galería Dinámica */}
+                        <div className="lg:col-span-5 bg-[#080808] flex flex-col border-l border-white/5 relative overflow-y-auto h-screen custom-scrollbar">
+                            <div className="p-8 pb-32 space-y-12 max-w-lg mx-auto w-full">
+                                {activeResources.length > 0 ? (
+                                    activeResources.map((item, idx) => (
+                                        <div key={item.id} className="group relative aspect-video bg-black border border-white/10 rounded-xl overflow-hidden cursor-pointer hover:border-orange-500 transition-all shadow-2xl" onClick={() => setSelectedIndex(idx)}>
+                                            {item.type === 'video' ? (
+                                                <div className="w-full h-full flex flex-col items-center justify-center bg-orange-500/5">
+                                                    <PlayCircle size={40} className="text-orange-500 mb-2 opacity-60 group-hover:opacity-100 transition-all" />
+                                                    <span className="text-[10px
