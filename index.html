@@ -1,411 +1,295 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NU8 - Socio Operativo B2B</title>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500;700;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root { 
-            --nu8-orange: #FF6B00; 
-            --nu8-black: #000000; 
-            --nu8-white: #FFFFFF; 
-        }
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--nu8-black); 
-            color: var(--nu8-white); 
-            margin: 0; 
-            overflow-x: hidden; 
-        }
-        .font-montserrat { font-family: 'Montserrat', sans-serif; }
-        .text-contrast { color: var(--nu8-orange); }
-        .grid-industrial { 
-            display: grid; 
-            grid-template-columns: repeat(12, 1fr); 
-            height: 100vh; 
-            width: 100vw; 
-        }
-        .section-padding { padding: 60px 80px; }
-        .technical-line { 
-            height: 1px; 
-            background: linear-gradient(90deg, var(--nu8-orange) 0%, transparent 100%); 
-            width: 100%; 
-            margin: 25px 0; 
-        }
-        .huge-title { 
-            font-size: clamp(2.5rem, 8vw, 4.5rem); 
-            line-height: 1.05; 
-            letter-spacing: -0.04em; 
-        }
-        .meta-text { 
-            font-size: 0.7rem; 
-            font-weight: 500; 
-            letter-spacing: 0.4em; 
-            text-transform: uppercase; 
-            color: rgba(255,255,255,0.4); 
-        }
-        .card-industrial { 
-            padding: 24px; 
-            border: 1px solid rgba(255,255,255,0.08); 
-            background: rgba(255,255,255,0.01); 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            cursor: pointer; 
-        }
-        .card-industrial:hover { 
-            border-color: var(--nu8-orange); 
-            background: rgba(255, 107, 0, 0.03); 
-            transform: translateY(-4px);
-        }
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  Settings, 
+  Layers, 
+  Zap, 
+  Clock, 
+  ShieldCheck, 
+  MessageSquare, 
+  Maximize2, 
+  X, 
+  ChevronRight, 
+  ChevronLeft, 
+  Printer, 
+  Package, 
+  Trophy, 
+  PlayCircle, 
+  AlertCircle,
+  Image as ImageIcon 
+} from 'lucide-react';
+
+const App = () => {
+  const [currentSlide, setCurrentSlide] = useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [videoError, setVideoError] = useState(false);
+  const [brokenResources, setBrokenResources] = useState({});
+  
+  const videoRef = useRef(null);
+  
+  const RAW_BASE = "https://raw.githubusercontent.com/nuocho/nu8/main/";
+  const VIDEO_CDN = "https://cdn.jsdelivr.net/gh/nuocho/nu8@main/";
+
+  // --- RECURSOS SLIDE 2 ---
+  const slide2Resources = [
+    { id: "p1", type: "image", src: "https://raw.githubusercontent.com/nuocho/nu8/432fb5445b78527132cbe9455370d98311286c3c/PROTOTIPADO.PNG", label: "PROTOTIPADO", category: "PROTOTIPADO RÁPIDO" },
+    { id: "v1", type: "video", src: VIDEO_CDN + "3D_ITS.mp4", label: "ITS", category: "VIDEOS" },
+    { id: "v2", type: "video", src: VIDEO_CDN + "3D_MAX.mp4", label: "MAX", category: "VIDEOS" },
+    { id: "r1", type: "image", src: RAW_BASE + "3d_calendarios.jpg", label: "CALENDARIOS", category: "RENDERS" },
+    { id: "r2", type: "image", src: RAW_BASE + "3d_embudos.jpg", label: "EMBUDOS", category: "RENDERS" },
+    { id: "r3", type: "image", src: RAW_BASE + "3d_faroles.jpg", label: "FAROLES", category: "RENDERS" },
+    { id: "r4", type: "image", src: RAW_BASE + "3d_max_cori.jpg", label: "MAX CORI", category: "RENDERS" },
+    { id: "r5", type: "image", src: RAW_BASE + "3d_sensodyne.jpg", label: "SENSODYNE", category: "RENDERS" },
+    { id: "r6", type: "image", src: RAW_BASE + "3d_texto.jpg", label: "TEXTO", category: "RENDERS" },
+    { id: "r7", type: "image", src: RAW_BASE + "acabado_pieza.jpg", label: "ACABADO PIEZA", category: "RENDERS" }
+  ];
+
+  // --- RECURSOS SLIDE 3 ---
+  const slide3Resources = [
+    { id: "b1", type: "image", src: RAW_BASE + "BTL1.JPG", label: "SOMBRILLAS", category: "BTL" },
+    { id: "b2", type: "image", src: RAW_BASE + "BTL2.jpeg", label: "SOMBRILLAS BRANDING", category: "BTL" },
+    { id: "b3", type: "image", src: RAW_BASE + "BTL3.jpeg", label: "BRANDING COLUMNAS", category: "BTL" },
+    { id: "b4", type: "image", src: RAW_BASE + "BTL4.PNG", label: "BRANDING ARAUCO", category: "BTL" },
+    { id: "b5", type: "image", src: RAW_BASE + "BTL6.PNG", label: "SACOS NAVIDEÑOS", category: "BTL" },
+    { id: "b6", type: "image", src: RAW_BASE + "BTL6.jpeg", label: "BANDERINES", category: "BTL" },
+    { id: "sm_c", type: "image", src: RAW_BASE + "SM_Camisas.JPG", label: "CAMISAS", category: "SEGUROS MUNDIAL" },
+    { id: "sm_m", type: "image", src: RAW_BASE + "SM_medallas.PNG", label: "MEDALLAS", category: "SEGUROS MUNDIAL" },
+    { id: "sm_p", type: "image", src: RAW_BASE + "SM_pines.PNG", label: "PINES", category: "SEGUROS MUNDIAL" },
+    { id: "sm_pm", type: "image", src: RAW_BASE + "SM_pinesmetalicos.PNG", label: "PINES METÁLICOS", category: "SEGUROS MUNDIAL" },
+    { id: "sm_r", type: "image", src: RAW_BASE + "SM_reconocimientos.PNG", label: "RECONOCIMIENTOS", category: "SEGUROS MUNDIAL" },
+    { id: "sm_t", type: "image", src: RAW_BASE + "SM_trofeos.PNG", label: "TROFEOS", category: "SEGUROS MUNDIAL" }
+  ];
+
+  const activeResources = currentSlide === 2 ? slide2Resources : (currentSlide === 3 ? slide3Resources : []);
+
+  useEffect(() => {
+    setVideoError(false);
+  }, [selectedIndex, currentSlide]);
+
+  const handleResourceError = (id) => {
+    setBrokenResources(prev => ({ ...prev, [id]: true }));
+  };
+
+  // Slides re-numerados (se eliminó el anterior ID 4)
+  const slides = [
+    { id: 1, title: "Núcleo de Producción", highlight: "Integral.", subtitle: "TU ALIADO OPERATIVO B2B", items: [{ label: "Producción Gráfica", target: 3, icon: <Layers size={24} /> }, { label: "Manufactura 3D", target: 2, icon: <Printer size={24} /> }, { label: "Diseño y Desarrollo", target: 4, icon: <Settings size={24} /> }], porter: "El B2B existe porque las empresas necesitan profesionales que entiendan sus reglas de juego para operar sin riesgos." },
+    { id: 2, tag: "Ingeniería 3D", title: "3D: Herramienta", highlight: "+ Experiencia.", subtitle: "DIFERENCIAL TÉCNICO", content: "Capacidad de respuesta industrial con acabados premium. Integramos modelado avanzado con manufactura de alta fidelidad para piezas que el mercado no ofrece.", items: [] },
+    { id: 3, tag: "Prueba de Valor", title: "Producción", highlight: "de Marca.", subtitle: "BTL + EXPERIENCIAS", content: "Ejecución técnica de activaciones y objetos de marca con acabados de nivel premium. Especialistas en transformar renders complejos en realidades tangibles.", items: [] },
+    { id: 4, tag: "Transparencia", title: "Estructura", highlight: "de Precios.", subtitle: "TARIFARIO B2B", content: "Costos competitivos basados en volumen y fidelidad. Eliminamos la fricción administrativa y los sobrecostos ocultos de las agencias tradicionales.", items: [] },
+    { id: 5, tag: "Cierre", title: "¿Qué proyecto", highlight: "tienes hoy?", subtitle: "VALIDACIÓN + CIERRE", content: "Estamos listos para materializar su estrategia. Díganos qué necesita y entregamos una ruta de ejecución técnica en menos de 24 horas.", items: [] }
+  ];
+
+  const currentSlideData = slides.find(s => s.id === currentSlide) || slides[0];
+
+  const nextSlide = () => {
+    if (currentSlide < slides.length) setCurrentSlide(currentSlide + 1);
+  };
+
+  const handleNextResource = (e) => { e.stopPropagation(); setSelectedIndex((prev) => (prev + 1) % activeResources.length); };
+  const handlePrevResource = (e) => { e.stopPropagation(); setSelectedIndex((prev) => (prev - 1 + activeResources.length) % activeResources.length); };
+
+  return (
+    <div className="min-h-screen bg-black text-white font-sans selection:bg-orange-600 overflow-x-hidden">
+      <style>{`
+        @keyframes entranceSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes subtlePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+        .animate-entrance { animation: entranceSlide 0.8s ease-out forwards; }
+        .animate-pulse-slow { animation: subtlePulse 3.5s ease-in-out infinite 0.8s; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 107, 0, 0.3); border-radius: 10px; }
+      `}</style>
+
+      <div className="fixed inset-0 pointer-events-none opacity-20">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-orange-600/10 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-orange-600 via-transparent to-transparent"></div>
+      </div>
+
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 min-h-screen">
         
-        .logo-container { 
-            display: flex; 
-            align-items: baseline; 
-            font-family: 'Montserrat', sans-serif; 
-            margin-bottom: 3.5rem; 
-            user-select: none; 
-        }
-        .logo-nu { color: var(--nu8-orange); font-size: 52px; font-weight: 800; letter-spacing: -3px; }
-        .logo-8 { color: var(--nu8-white); font-size: 72px; line-height: 1; margin-left: 2px; font-weight: 500; }
-        
-        .nav-btn { 
-            width: 45px; 
-            height: 45px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            background: rgba(255, 255, 255, 0.05); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 50%; 
-            color: white; 
-            font-size: 11px; 
-            font-weight: 900; 
-            transition: all 0.3s ease; 
-        }
-        .nav-btn:hover, .nav-btn.active { 
-            background: var(--nu8-orange); 
-            color: black; 
-            border-color: var(--nu8-orange); 
-        }
-        .porter-box { 
-            border-left: 4px solid var(--nu8-orange); 
-            padding: 15px 30px; 
-            background: rgba(255, 107, 0, 0.04); 
-            margin-top: 20px; 
-        }
-        
-        .photo-slot { 
-            aspect-ratio: 1/1; 
-            background: #0a0a0a; 
-            border: 1px solid rgba(255,255,255,0.05); 
-            position: relative; 
-            overflow: hidden; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            transition: all 0.5s ease;
-        }
-        .photo-slot.revealed { border-color: var(--nu8-orange); }
-        .photo-img { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            opacity: 0; 
-            transition: opacity 0.8s ease; 
-        }
-        .photo-slot.revealed .photo-img { opacity: 0.5; }
-        .photo-info { 
-            position: relative; 
-            z-index: 10; 
-            text-align: center; 
-            padding: 10px; 
-            background: rgba(0,0,0,0.85); 
-            width: 100%; 
-            margin-top: auto; 
-            backdrop-filter: blur(5px);
-        }
-        
-        .infinity-symbol { display: inline-block; transform: rotate(90deg); font-family: 'Montserrat', sans-serif; font-weight: 500; color: var(--nu8-orange); position: relative; top: 2px; }
-        
-        @media (max-width: 1024px) { 
-            .grid-industrial { grid-template-columns: 1fr; height: auto; min-height: 100vh; overflow-y: auto; } 
-            .section-padding { padding: 40px 25px; } 
-            .huge-title { font-size: 2.8rem; } 
-            .col-span-12 { grid-column: span 12 / span 12; border: none !important; }
-        }
-    </style>
-</head>
-<body>
-    <div id="root"></div>
+        {/* Left Section */}
+        <div className="lg:col-span-7 p-8 md:p-16 flex flex-col justify-between border-r border-white/5 bg-black/50 backdrop-blur-sm">
+          <header className="mb-6">
+            <div className="flex items-baseline group cursor-pointer select-none" onClick={() => setCurrentSlide(1)}>
+              <span className="text-3xl font-black tracking-tighter text-orange-500 group-hover:brightness-110 transition-all">nuocho</span>
+              <span className="text-3xl font-light tracking-tighter text-white/90">estudio</span>
+            </div>
+          </header>
 
-    <script type="text/babel">
-        const { useState } = React;
+          <main className="animate-in fade-in slide-in-from-left-4 duration-700 flex-1 flex flex-col justify-center">
+            <div className="mb-2">
+              <span className="text-[10px] font-black tracking-[0.4em] text-orange-500 uppercase py-1 px-3 border border-orange-500/30 rounded-full bg-orange-500/5">
+                {currentSlideData.subtitle}
+              </span>
+            </div>
+            <h1 className="text-5xl md:text-7xl font-black uppercase leading-[0.9] tracking-tighter mb-8">
+              <span className="font-thin block">{currentSlideData.title}</span>
+              <span className="text-orange-500">{currentSlideData.highlight}</span>
+            </h1>
+            <div className="h-px w-full bg-gradient-to-r from-orange-500 to-transparent mb-10 opacity-50" />
 
-        const App = () => {
-            const [currentSlide, setCurrentSlide] = useState(1);
-            const [revealedPhotos, setRevealedPhotos] = useState(0);
-
-            const slides = [
-                {
-                    id: 1,
-                    title: "Núcleo de Producción",
-                    highlight: "Integral.",
-                    subtitle: "TU ALIADO OPERATIVO B2B",
-                    content: "Operador de producción para mercadeo. Resolvemos la ejecución, el control de proveedores y la optimización de procesos técnicos.",
-                    items: [
-                        { label: "Producción Gráfica", target: 5, icon: "🖼️" },
-                        { label: "Manufactura 3D", target: 4, icon: "📦" },
-                        { label: "Diseño y Desarrollo", target: 7, icon: "🖨️" }
-                    ],
-                    porter: "El B2B existe porque las empresas necesitan otros profesionales que entiendan sus reglas de juego para poder operar sin riesgos."
-                },
-                {
-                    id: 2,
-                    tag: "Impacto Real 🔴",
-                    title: "Implementación",
-                    highlight: "en Mercadeo.",
-                    subtitle: "EJECUCIÓN TODO-EN-UNO",
-                    content: "Brandeo de columnas, sombrillas, banderines, avisos, volantes e impresión gran formato.",
-                    gallery: [
-                        { label: "Columnas", img: "https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?auto=format&fit=crop&w=400" },
-                        { label: "Sombrillas", img: "https://images.unsplash.com/photo-1534349735944-2b3a6f7a268f?auto=format&fit=crop&w=400" },
-                        { label: "Banderines", img: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=400" },
-                        { label: "Avisos", img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=400" },
-                        { label: "Volantes", img: "https://images.unsplash.com/photo-1562654508-4d9213f8967b?auto=format&fit=crop&w=400" },
-                        { label: "Impresión", img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=400" }
-                    ]
-                },
-                {
-                    id: 3,
-                    tag: "Prueba de Valor",
-                    title: "Producción",
-                    highlight: "de Marca.",
-                    subtitle: "MERCH + OBJETOS",
-                    content: "Piezas personalizadas con acabados de alta precisión. Fidelidad Pantone 100% y acabados manuales de nivel premium.",
-                    items: [
-                        { label: "Trofeos Seguros Mundial", icon: "🏆" },
-                        { label: "Kits VIP / Bienvenida", icon: "🎁" },
-                        { label: "Objetos de Branding", icon: "🏷️" },
-                        { label: "Acabados Premium", icon: "✨" }
-                    ]
-                },
-                {
-                    id: 4,
-                    tag: "Ingeniería 3D 🔴",
-                    title: "3D: Herramienta",
-                    highlight: "+ Experiencia.",
-                    subtitle: "MANUFACTURA ADITIVA",
-                    content: "El 3D en NU8 es funcional. Si el mercado no ofrece la pieza que el mall necesita, nosotros la inventamos y producimos.",
-                    items: [
-                        { label: "Cargabolsas Ergonómicos", icon: "🛍️" },
-                        { label: "Alcancías Monumentales", icon: "💰" },
-                        { label: "Coleccionables de Marca", icon: "🧸" },
-                        { label: "Repuestos Técnicos", icon: "🔧" }
-                    ]
-                },
-                {
-                    id: 5,
-                    tag: "Continuidad 🔵",
-                    title: "Propuesta",
-                    highlight: "Continua.",
-                    subtitle: "MODELO MENSUAL (RETAINER)",
-                    content: "Un aliado permanente con respuesta inmediata en 24h para emergencias y requerimientos de producción flash.",
-                    items: [
-                        { label: "Fee Mensual Soporte", icon: "📅" },
-                        { label: "Mantenimiento Gráfico", icon: "🛠️" },
-                        { label: "Piezas 3D Recurrentes", icon: "📦" },
-                        { label: "Gestión de Montajes", icon: "🏗️" }
-                    ]
-                },
-                {
-                    id: 7,
-                    tag: "Transparencia 🔵",
-                    title: "Estructura",
-                    highlight: "de Precios.",
-                    subtitle: "TARIFARIO B2B",
-                    content: "Costos competitivos basados en volumen y fidelidad. Sin fricción administrativa ni sobrecostos ocultos.",
-                    items: [
-                        { label: "Producción 3D / Unidad", icon: "💵" },
-                        { label: "Gran Formato / m2", icon: "📐" },
-                        { label: "Montaje / Cuadrilla", icon: "👷" },
-                        { label: "Merch / Volumen", icon: "📦" }
-                    ]
-                },
-                {
-                    id: 8,
-                    tag: "Cierre 🔴",
-                    title: "¿Qué proyecto",
-                    highlight: "tienes hoy?",
-                    subtitle: "VALIDACIÓN + CIERRE",
-                    content: "Estamos listos para materializar su estrategia ahora mismo. (Preguntar por su mascota para cierre emocional).",
-                    items: [
-                        { label: "Línea Directa 24/7", icon: "📞" },
-                        { label: "Cotización < 24h", icon: "⏱️" },
-                        { label: "Control de Calidad", icon: "✅" },
-                        { label: "Entrega en Ceros", icon: "🧹" }
-                    ]
-                }
-            ];
-
-            const slide = slides.find(s => s.id === currentSlide) || slides[0];
-
-            return (
-                <div className="grid-industrial relative bg-black">
-                    {/* Lado Izquierdo */}
-                    <div className="col-span-12 lg:col-span-7 section-padding flex flex-col justify-between border-r border-white/5 z-10">
-                        <header>
-                            <div className="logo-container">
-                                <span className="logo-nu">Nu</span>
-                                <span className="logo-8">8</span>
-                            </div>
-                        </header>
-
-                        <main key={currentSlide} className="transition-opacity duration-500">
-                            <div className="mb-4">
-                                <p className="meta-text text-contrast mb-2 tracking-[0.4em]">{slide.subtitle}</p>
-                                <h1 className="font-montserrat huge-title text-white uppercase">
-                                    <span style={{ fontWeight: 100 }}>{slide.title}</span> <br />
-                                    <span className="text-contrast" style={{ fontWeight: 500 }}>{slide.highlight}</span>
-                                </h1>
-                            </div>
-
-                            <div className="technical-line" />
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                                <div className="space-y-4">
-                                    {currentSlide === 1 ? (
-                                        <div className="space-y-6">
-                                            <div>
-                                                <p className="text-sm font-bold tracking-widest text-white uppercase">NU = Núcleo</p>
-                                                <p className="text-[11px] text-white/40 uppercase font-bold mt-1 tracking-wider">Convergencia operativa total.</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-sm font-black tracking-widest text-white uppercase">
-                                                    <span className="infinity-symbol mr-2">8</span> = Energía
-                                                </p>
-                                                <p className="text-[11px] text-white/40 uppercase font-bold mt-1 tracking-wider">Ciclo de producción constante.</p>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <p className="text-[16px] text-white/70 leading-relaxed font-medium">{slide.content}</p>
-                                    )}
-                                </div>
-                                
-                                <div className="flex flex-col justify-end">
-                                    {currentSlide === 1 ? (
-                                        <div className="space-y-4">
-                                            <div className="porter-box">
-                                                <p className="text-[12px] font-medium text-white/80 italic leading-relaxed">"{slide.porter}"</p>
-                                                <p className="text-[11px] font-black text-contrast uppercase tracking-widest mt-4">— Michael Porter</p>
-                                            </div>
-                                            <div className="pt-4 opacity-50 text-white">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.2em] mb-1">311 535 92 53</p>
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.2em]">direccioncreativa@nuocho.com.co</p>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <div className="p-4 border border-white/10 bg-white/5 rounded">
-                                            <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest text-center">Operación Activa</p>
-                                        </div>
-                                    )}
-                                    {currentSlide === 2 && (
-                                        <div className="p-5 border border-white/10 bg-white/5 rounded-lg mt-4">
-                                            <p className="text-[10px] font-bold text-contrast uppercase mb-3 tracking-widest text-center">Registro de Ejecución</p>
-                                            <div className="flex items-center justify-between gap-4">
-                                                <span className="text-3xl font-montserrat font-bold text-white/20">{revealedPhotos}/6</span>
-                                                <button 
-                                                    onClick={() => setRevealedPhotos(p => p < 6 ? p + 1 : 0)}
-                                                    className="flex-1 bg-orange-600 text-black text-[10px] font-black px-4 py-3 rounded uppercase tracking-tighter"
-                                                >
-                                                    {revealedPhotos === 6 ? 'Reiniciar' : 'Revelar Siguiente'}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </main>
-
-                        <footer className="mt-8 opacity-20">
-                            <div className="text-[11px] font-black text-white uppercase tracking-[0.6em]">nu8 estudio — 2026</div>
-                        </footer>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+              <div className="space-y-6">
+                {currentSlide !== 1 && <p className="text-lg text-gray-400 leading-relaxed mb-6">{currentSlideData.content}</p>}
+                {currentSlide === 1 && (
+                  <div className="grid grid-cols-1 gap-6 pt-4 border-t border-white/5">
+                    <div className="flex items-start gap-4">
+                      <span className="text-2xl font-black text-orange-500 mt-1">NU</span>
+                      <div><p className="text-sm font-black uppercase tracking-widest text-white">NÚCLEO</p><p className="text-[11px] font-medium text-white/40 uppercase">Convergencia operativa total.</p></div>
                     </div>
+                    <div className="flex items-start gap-4">
+                      <span className="text-3xl font-light text-orange-500 leading-none">∞</span>
+                      <div><p className="text-sm font-black uppercase tracking-widest text-white">ENERGÍA</p><p className="text-[11px] font-medium text-white/40 uppercase">Ciclo de producción constante.</p></div>
+                    </div>
+                    <div className="bg-orange-500/5 border-l-2 border-orange-500/40 p-5 my-4 opacity-60">
+                      <p className="text-[11px] italic text-gray-400 leading-relaxed">"{currentSlideData.porter}"</p>
+                      <p className="text-[9px] font-black text-orange-500/60 uppercase mt-3 tracking-widest">— Michael Porter</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="space-y-4">
+                {currentSlide === 1 ? [
+                  { label: "Producción Gráfica", target: 3, icon: <Layers size={24} /> },
+                  { label: "Manufactura 3D", target: 2, icon: <Printer size={24} /> },
+                  { label: "Diseño y Desarrollo", target: 4, icon: <Settings size={24} /> }
+                ].map((item, idx) => (
+                  <div key={idx} onClick={() => item.target && setCurrentSlide(item.target)} className="group p-4 border border-white/5 bg-white/5 rounded-xl flex items-center justify-between transition-all hover:border-orange-500/50 hover:bg-orange-500/5 cursor-pointer">
+                    <div className="flex items-center gap-4"><span className="text-orange-500 group-hover:scale-110 transition-transform">{item.icon}</span><span className="text-[11px] font-bold uppercase tracking-widest">{item.label}</span></div>
+                    <ChevronRight size={16} className="text-gray-600 group-hover:text-orange-500" />
+                  </div>
+                )) : currentSlide === 4 ? [
+                  { label: "Producción 3D / Unidad", icon: <Printer size={20} /> }, { label: "Gran Formato / m2", icon: <Layers size={20} /> }, { label: "Montaje / Cuadrilla", icon: <Settings size={20} /> }, { label: "Logística Nacional", icon: <Package size={20} /> }
+                ].map((item, idx) => (
+                  <div key={idx} className="group p-4 border border-white/5 bg-white/5 rounded-xl flex items-center gap-4 transition-all">
+                    <span className="text-orange-500">{item.icon}</span>
+                    <span className="text-[11px] font-bold uppercase tracking-widest">{item.label}</span>
+                  </div>
+                )) : currentSlide === 5 ? [
+                  { label: "Línea Directa 24/7", icon: <MessageSquare size={20} /> }, { label: "Cotización Express", icon: <Clock size={20} /> }, { label: "Control de Calidad", icon: <ShieldCheck size={20} /> }, { label: "Entrega en Ceros", icon: <Zap size={20} /> }
+                ].map((item, idx) => (
+                  <div key={idx} className="group p-4 border border-white/5 bg-white/5 rounded-xl flex items-center gap-4 transition-all">
+                    <span className="text-orange-500">{item.icon}</span>
+                    <span className="text-[11px] font-bold uppercase tracking-widest">{item.label}</span>
+                  </div>
+                )) : null}
+              </div>
+            </div>
+          </main>
 
-                    {/* Lado Derecho */}
-                    <div className="col-span-12 lg:col-span-5 bg-[#050505] flex flex-col z-10 border-l border-white/5 min-h-[450px]">
-                        <div className="flex-1 section-padding flex flex-col justify-center">
-                            {currentSlide === 1 ? (
-                                <div className="grid grid-cols-1 gap-4">
-                                    {slide.items.map((item, idx) => (
-                                        <div key={idx} onClick={() => setCurrentSlide(item.target)} className="card-industrial h-32">
-                                            <div className="text-contrast text-3xl mb-2">{item.icon}</div>
-                                            <p className="font-bold text-[12px] uppercase tracking-widest text-white">{item.label}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : currentSlide === 2 ? (
-                                <div className="grid grid-cols-2 gap-3" onClick={() => setRevealedPhotos(p => p < 6 ? p + 1 : 0)}>
-                                    {slide.gallery.map((item, idx) => (
-                                        <div key={idx} className={`photo-slot ${idx < revealedPhotos ? 'revealed' : 'opacity-10'}`}>
-                                            {idx < revealedPhotos && <img src={item.img} className="photo-img" />}
-                                            {idx < revealedPhotos ? (
-                                                <div className="photo-info animate-in fade-in duration-500">
-                                                    <p className="text-[10px] font-black text-white uppercase tracking-widest">{item.label}</p>
-                                                    <p className="text-[8px] text-orange-500 mt-1 uppercase font-bold tracking-widest">Ejecución Real</p>
-                                                </div>
-                                            ) : (
-                                                <div className="text-white/20 text-3xl font-light">+</div>
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
+          <footer className="mt-8 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-end md:items-center gap-6">
+            <div className="flex flex-col md:flex-row gap-8 text-white/30 w-full md:w-auto">
+              <a href="https://wa.me/573115359253" target="_blank" rel="noopener noreferrer" className="flex flex-col group cursor-pointer">
+                <span className="text-[7px] font-black uppercase tracking-[0.4em] mb-1 text-orange-500/40 group-hover:text-orange-500 transition-colors">WhatsApp Directo</span>
+                <span className="text-[10px] font-bold tracking-[0.2em] group-hover:text-white transition-colors">311 535 92 53</span>
+              </a>
+              <a href="mailto:direccioncreativa@nuocho.com.co" className="flex flex-col group cursor-pointer">
+                <span className="text-[7px] font-black uppercase tracking-[0.4em] mb-1 text-orange-500/40 group-hover:text-orange-500 transition-colors">E-mail Corporativo</span>
+                <span className="text-[10px] font-bold tracking-[0.2em] group-hover:text-white transition-colors">direccioncreativa@nuocho.com.co</span>
+              </a>
+            </div>
+            <div className="opacity-20 text-[9px] font-black uppercase tracking-[0.6em] text-right whitespace-nowrap">nu8 estudio — 2026</div>
+          </footer>
+        </div>
+
+        {/* Right Section */}
+        <div className="lg:col-span-5 bg-[#080808] flex flex-col border-l border-white/5 relative overflow-hidden">
+          {(currentSlide === 2 || currentSlide === 3) ? (
+            <div className="h-full p-8 overflow-y-auto custom-scrollbar">
+              <div className="max-w-md mx-auto space-y-12 pb-24">
+                {Array.from(new Set(activeResources.map(r => r.category))).map((cat, sIdx) => (
+                  <section key={sIdx}>
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-500 mb-6 flex items-center gap-2">
+                      <span className="w-4 h-px bg-orange-500"></span> {cat}
+                    </h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      {activeResources.filter(r => r.category === cat).map((item) => {
+                        const globalIdx = activeResources.indexOf(item);
+                        const isBroken = brokenResources[item.id];
+                        return (
+                          <button key={item.id} onClick={() => setSelectedIndex(globalIdx)} className={`group relative aspect-video bg-black border border-white/10 rounded-lg transition-all hover:border-orange-500 hover:bg-orange-500/[0.05] hover:-translate-y-1 active:scale-95 shadow-xl overflow-hidden ${item.type === 'video' ? 'flex flex-col items-center justify-center p-6 text-center' : ''}`}>
+                            {item.type === 'video' ? (
+                              <><PlayCircle size={24} className="text-orange-500 mb-3 opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all" /><span className="block text-[10px] font-black text-white/80 uppercase tracking-widest">{item.label}</span></>
                             ) : (
-                                <div className="grid grid-cols-1 gap-4">
-                                    {slide.items && slide.items.map((item, idx) => (
-                                        <div key={idx} className="card-industrial h-24">
-                                            <div className="flex justify-between items-center">
-                                                <p className="font-bold text-[11px] uppercase tracking-widest text-white">{item.label}</p>
-                                                <span className="text-2xl">{item.icon}</span>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
+                              <>
+                                {!isBroken ? (
+                                  <img src={item.src} alt={item.label} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" onError={() => handleResourceError(item.id)} />
+                                ) : (
+                                  <div className="w-full h-full flex flex-col items-center justify-center bg-white/[0.02] text-white/10"><ImageIcon size={20} className="mb-2" /><span className="text-[8px] font-bold uppercase tracking-widest text-center px-2">Preview Técnico</span></div>
+                                )}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+                                <span className="absolute bottom-2 left-3 block text-[9px] font-black text-white uppercase tracking-widest drop-shadow-md">{item.label}</span>
+                              </>
                             )}
-                        </div>
-                        <div className="h-[20%] bg-black border-t border-white/5 p-12 flex flex-col justify-center opacity-40">
-                            <p className="text-[11px] font-bold uppercase tracking-[0.8em] text-center">Materializamos Estrategias</p>
-                        </div>
+                          </button>
+                        );
+                      })}
                     </div>
-
-                    {/* Navegación Fija */}
-                    <div className="fixed bottom-10 right-10 flex gap-3 z-50">
-                        {[1, 2, 3, 4, 5, 7, 8].map(num => (
-                            <button 
-                                key={num} 
-                                onClick={() => { setCurrentSlide(num); setRevealedPhotos(0); }} 
-                                className={`nav-btn ${currentSlide === num ? 'active' : ''}`}
-                            >
-                                {num}
-                            </button>
-                        ))}
+                  </section>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="h-full flex items-center justify-center p-12 relative">
+               <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#FF6B00 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+               <div className="relative text-center">
+                  <div className="w-40 h-40 border border-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-10 animate-pulse">
+                    <div className="w-32 h-32 border border-orange-500/40 rounded-full flex items-center justify-center">
+                      <div className="w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center text-black font-black text-xl">{currentSlide}</div>
                     </div>
-                </div>
-            );
-        };
+                  </div>
+                  <div className="overflow-hidden py-4">
+                    <p key={currentSlide} className={`text-[12px] md:text-[14px] font-black uppercase tracking-[1.2em] text-orange-500 ${currentSlide === 1 ? 'animate-entrance' : ''}`}>
+                      <span className={currentSlide === 1 ? 'inline-block animate-pulse-slow' : ''}>{currentSlide === 1 ? "PRECISIÓN OPERATIVA" : "Pipeline Operativo"}</span>
+                    </p>
+                  </div>
+               </div>
+            </div>
+          )}
+        </div>
+      </div>
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
-</body>
-</html>
+      {/* Navigation Bubble */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-black/80 backdrop-blur-xl p-2 rounded-full border border-white/10 z-50">
+        {[1, 2, 3, 4, 5].map(num => (
+          <button key={num} onClick={() => setCurrentSlide(num)} className={`w-10 h-10 rounded-full flex items-center justify-center text-[10px] font-black transition-all ${currentSlide === num ? 'bg-orange-500 text-black scale-110 shadow-lg shadow-orange-500/20' : 'text-gray-500 hover:text-white'}`}>0{num}</button>
+        ))}
+        <div className="w-px h-6 bg-white/10 mx-2" />
+        <button onClick={nextSlide} disabled={currentSlide === 5} className="pr-4 pl-2 py-2 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest disabled:opacity-20 group">
+          Siguiente <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+        </button>
+      </div>
+
+      {/* Visualizador Modal */}
+      {selectedIndex !== null && activeResources.length > 0 && (
+        <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-6 animate-in fade-in duration-300" onClick={() => setSelectedIndex(null)}>
+          <button onClick={handlePrevResource} className="absolute left-4 lg:left-12 p-4 text-white/30 hover:text-orange-500 hover:scale-110 transition-all z-20"><ChevronLeft size={48} /></button>
+          <div className="relative bg-[#0a0a0a] border border-white/10 rounded-2xl p-4 max-w-4xl w-full flex flex-col items-center animate-in zoom-in-95 duration-300 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="w-full flex justify-between items-center mb-4 px-2">
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/50">{activeResources[selectedIndex].label}</span>
+              <button onClick={() => setSelectedIndex(null)} className="p-2 hover:bg-orange-500 hover:text-black rounded-full transition-all"><X size={18} /></button>
+            </div>
+            <div className="w-full max-h-[65vh] flex items-center justify-center overflow-hidden rounded-xl bg-black relative min-h-[300px]">
+              {activeResources[selectedIndex].type === "video" ? (
+                videoError ? (<div className="text-center p-12"><AlertCircle size={48} className="text-orange-500/40 mb-4" /><p className="text-[11px] font-black uppercase tracking-widest text-white/40">No se pudo cargar el video</p></div>) :
+                (<video key={activeResources[selectedIndex].src} controls playsInline autoPlay={false} preload="metadata" crossOrigin="anonymous" className="max-w-full max-h-[65vh] rounded-lg shadow-inner" onError={() => setVideoError(true)}><source src={activeResources[selectedIndex].src} type="video/mp4" /></video>)
+              ) : (
+                !brokenResources[activeResources[selectedIndex].id] ? (
+                  <img src={activeResources[selectedIndex].src} alt={activeResources[selectedIndex].label} className="max-w-full max-h-[65vh] object-contain rounded-lg shadow-inner" />
+                ) : (
+                  <div className="flex flex-col items-center justify-center text-center p-20 text-white/20"><ImageIcon size={64} className="mb-6 opacity-10" /><p className="text-xs font-black uppercase tracking-widest">Recurso en fase técnica</p><p className="text-[8px] mt-2 text-white/10 font-bold uppercase tracking-[0.4em]">{activeResources[selectedIndex].label}</p></div>
+                )
+              )}
+            </div>
+            <div className="mt-4 pt-4 border-t border-white/5 w-full flex justify-between items-center px-4">
+              <span className="text-[9px] font-bold text-orange-500 uppercase tracking-widest">NU8 Visualización Técnica</span>
+              <span className="text-[9px] font-bold text-white/20">{selectedIndex + 1} / {activeResources.length}</span>
+            </div>
+          </div>
+          <button onClick={handleNextResource} className="absolute right-4 lg:right-12 p-4 text-white/30 hover:text-orange-500 hover:scale-110 transition-all z-20"><ChevronRight size={48} /></button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
