@@ -1,159 +1,142 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #b76ff7; -webkit-text-stroke: #b76ff7; background-color: #171818}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #b76ff7; -webkit-text-stroke: #b76ff7; background-color: #171818; min-height: 16.0px}
-    span.s1 {font-kerning: none}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NU8 - Presentación B2B</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background: #000; color: #fff; margin: 0; overflow-x: hidden; }
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #f97316; border-radius: 10px; }
+    </style>
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html lang="es"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;head&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;NU8 - Presentación B2B&lt;/title&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/react@18/umd/react.production.min.js"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/@babel/standalone/babel.min.js"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;style&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&amp;display=swap');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>body { font-family: 'Inter', sans-serif; background: #000; color: #fff; margin: 0; overflow-x: hidden; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.fade-in { animation: fadeIn 0.6s ease-out forwards; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.custom-scrollbar::-webkit-scrollbar { width: 4px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.custom-scrollbar::-webkit-scrollbar-thumb { background: #f97316; border-radius: 10px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;body&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="root"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div style="background:black; color:#333; height:100vh; display:flex; items-center; justify-content:center; font-size:10px; letter-spacing:5px;"&gt;CARGANDO NU8...&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script type="text/babel"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const { useState } = React;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const App = () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const [currentSlide, setCurrentSlide] = useState(1);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const RAW_BASE = "https://raw.githubusercontent.com/nuocho/nu8/main/";</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const VIDEO_CDN = "https://cdn.jsdelivr.net/gh/nuocho/nu8@main/";</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const slide2Resources = [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ id: "p1", type: "image", src: "https://raw.githubusercontent.com/nuocho/nu8/432fb5445b78527132cbe9455370d98311286c3c/PROTOTIPADO.PNG", label: "PROTOTIPADO", category: "INGENIERÍA 3D" },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ id: "v1", type: "video", src: VIDEO_CDN + "3D_ITS.mp4", label: "PROYECTO ITS", category: "VIDEOS" },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ id: "r5", type: "image", src: RAW_BASE + "3d_sensodyne.jpg", label: "SENSODYNE", category: "RENDERS" },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ id: "r7", type: "image", src: RAW_BASE + "acabado_pieza.jpg", label: "ACABADO TÉCNICO", category: "PRODUCCIÓN" }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>];</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const slide3Resources = [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ id: "b1", type: "image", src: RAW_BASE + "BTL1.JPG", label: "SOMBRILLAS", category: "BTL" },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ id: "b4", type: "image", src: RAW_BASE + "BTL4.PNG", label: "MARCA ARAUCO", category: "RETAIL" },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ id: "sm_t", type: "image", src: RAW_BASE + "SM_trofeos.PNG", label: "TROFEOS", category: "MERCHANDISING" }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>];</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const activeResources = currentSlide === 2 ? slide2Resources : (currentSlide === 3 ? slide3Resources : []);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const slides = {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>1: { title: "Núcleo de Producción", highlight: "Integral.", sub: "ALIADO OPERATIVO B2B", body: "El B2B requiere profesionales que entiendan la logística y el riesgo. En NU8 materializamos su visión con rigor técnico." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>2: { title: "Ingeniería", highlight: "3D.", sub: "DIFERENCIAL TÉCNICO", body: "Capacidad de respuesta industrial con acabados premium. Modelado avanzado y manufactura de alta fidelidad." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>3: { title: "Producción", highlight: "de Marca.", sub: "BTL + EXPERIENCIAS", body: "Ejecución técnica de activaciones. Especialistas en transformar renders complejos en realidades tangibles." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>4: { title: "Estructura", highlight: "de Precios.", sub: "TRANSPARENCIA B2B", body: "Costos competitivos basados en volumen. Eliminamos sobrecostos ocultos para agencias y marcas." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>5: { title: "¿Qué proyecto", highlight: "tienes hoy?", sub: "VALIDACIÓN + CIERRE", body: "Ruta de ejecución técnica en menos de 24 horas. Listos para operar." }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const data = slides[currentSlide];</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>return (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div className="min-h-screen bg-black flex flex-col lg:grid lg:grid-cols-12"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{/* IZQUIERDA: CONTENIDO */}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div className="lg:col-span-7 p-8 md:p-16 flex flex-col justify-between border-r border-white/5 bg-black/40 h-screen"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;header className="cursor-pointer" onClick={() =&gt; setCurrentSlide(1)}&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div className="flex items-baseline"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;span className="text-3xl font-black text-orange-500 uppercase tracking-tighter"&gt;nuocho&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;span className="text-3xl font-light text-white uppercase tracking-tighter ml-1"&gt;estudio&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/header&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;main className="fade-in py-12"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;span className="text-[10px] font-black tracking-[0.4em] text-orange-500 border border-orange-500/30 px-3 py-1 rounded-full uppercase bg-orange-500/5 mb-6 inline-block"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>{data.sub}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;h1 className="text-6xl md:text-8xl font-black uppercase leading-[0.85] tracking-tighter mb-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>{data.title}&lt;br/&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;span className="text-orange-500"&gt;{data.highlight}&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div className="h-1 w-24 bg-orange-500 mb-8"&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;p className="text-lg text-gray-400 leading-relaxed max-w-lg"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>{data.body}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/main&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;footer className="pt-8 border-t border-white/5 flex flex-wrap gap-10"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;a href="https://wa.me/573115359253" target="_blank" className="block group"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;p className="text-[8px] font-black uppercase tracking-widest text-orange-500/50 mb-1 group-hover:text-orange-500 transition-colors"&gt;WhatsApp Directo&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;p className="text-xs font-bold group-hover:text-white transition-colors"&gt;311 535 92 53&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;a href="mailto:direccioncreativa@nuocho.com.co" className="block group"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;p className="text-[8px] font-black uppercase tracking-widest text-orange-500/50 mb-1 group-hover:text-orange-500 transition-colors"&gt;Email Corporativo&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;p className="text-xs font-bold group-hover:text-white transition-colors"&gt;direccioncreativa@nuocho.com.co&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/footer&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{/* DERECHA: GALERÍA */}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div className="lg:col-span-5 bg-[#050505] border-l border-white/5 relative overflow-y-auto h-screen custom-scrollbar"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="p-8 pb-32 space-y-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{activeResources.length &gt; 0 ? (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>activeResources.map((item) =&gt; (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;div key={item.id} className="group relative aspect-video bg-black border border-white/10 rounded-xl overflow-hidden shadow-2xl transition-all hover:border-orange-500/50"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                        </span>{item.type === 'video' ? (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;video src={item.src} autoPlay muted loop className="w-full h-full object-cover opacity-40 group-hover:opacity-100 transition-opacity" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                        </span>) : (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;img src={item.src} className="w-full h-full object-cover opacity-40 group-hover:opacity-100 transition-opacity" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                        </span>)}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;div className="absolute bottom-4 left-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;span className="text-[8px] text-orange-500 font-black uppercase tracking-widest block mb-1"&gt;{item.category}&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;span className="text-xs font-black uppercase tracking-widest"&gt;{item.label}&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>))</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>) : (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="h-full flex items-center justify-center opacity-5 select-none pt-20"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;div className="text-[15rem] font-black tracking-tighter"&gt;{currentSlide}&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>)}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{/* NAVEGACIÓN */}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 bg-black/80 backdrop-blur-xl p-2 rounded-full border border-white/10 z-50"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>{[1, 2, 3, 4, 5].map(n =&gt; (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;button<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>key={n}<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>onClick={() =&gt; setCurrentSlide(n)}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>className={`w-10 h-10 rounded-full font-black text-[10px] transition-all ${currentSlide === n ? 'bg-orange-500 text-black scale-110 shadow-lg shadow-orange-500/20' : 'text-zinc-600 hover:text-white'}`}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>0{n}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>))}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const root = ReactDOM.createRoot(document.getElementById('root'));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>root.render(&lt;App /&gt;);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+    <div id="root">
+        <div style="background:black; color:#333; height:100vh; display:flex; items-center; justify-content:center; font-size:10px; letter-spacing:5px;">CARGANDO NU8...</div>
+    </div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const App = () => {
+            const [currentSlide, setCurrentSlide] = useState(1);
+            
+            const RAW_BASE = "https://raw.githubusercontent.com/nuocho/nu8/main/";
+            const VIDEO_CDN = "https://cdn.jsdelivr.net/gh/nuocho/nu8@main/";
+
+            const slide2Resources = [
+                { id: "p1", type: "image", src: "https://raw.githubusercontent.com/nuocho/nu8/432fb5445b78527132cbe9455370d98311286c3c/PROTOTIPADO.PNG", label: "PROTOTIPADO", category: "INGENIERÍA 3D" },
+                { id: "v1", type: "video", src: VIDEO_CDN + "3D_ITS.mp4", label: "PROYECTO ITS", category: "VIDEOS" },
+                { id: "r5", type: "image", src: RAW_BASE + "3d_sensodyne.jpg", label: "SENSODYNE", category: "RENDERS" },
+                { id: "r7", type: "image", src: RAW_BASE + "acabado_pieza.jpg", label: "ACABADO TÉCNICO", category: "PRODUCCIÓN" }
+            ];
+
+            const slide3Resources = [
+                { id: "b1", type: "image", src: RAW_BASE + "BTL1.JPG", label: "SOMBRILLAS", category: "BTL" },
+                { id: "b4", type: "image", src: RAW_BASE + "BTL4.PNG", label: "MARCA ARAUCO", category: "RETAIL" },
+                { id: "sm_t", type: "image", src: RAW_BASE + "SM_trofeos.PNG", label: "TROFEOS", category: "MERCHANDISING" }
+            ];
+
+            const activeResources = currentSlide === 2 ? slide2Resources : (currentSlide === 3 ? slide3Resources : []);
+
+            const slides = {
+                1: { title: "Núcleo de Producción", highlight: "Integral.", sub: "ALIADO OPERATIVO B2B", body: "El B2B requiere profesionales que entiendan la logística y el riesgo. En NU8 materializamos su visión con rigor técnico." },
+                2: { title: "Ingeniería", highlight: "3D.", sub: "DIFERENCIAL TÉCNICO", body: "Capacidad de respuesta industrial con acabados premium. Modelado avanzado y manufactura de alta fidelidad." },
+                3: { title: "Producción", highlight: "de Marca.", sub: "BTL + EXPERIENCIAS", body: "Ejecución técnica de activaciones. Especialistas en transformar renders complejos en realidades tangibles." },
+                4: { title: "Estructura", highlight: "de Precios.", sub: "TRANSPARENCIA B2B", body: "Costos competitivos basados en volumen. Eliminamos sobrecostos ocultos para agencias y marcas." },
+                5: { title: "¿Qué proyecto", highlight: "tienes hoy?", sub: "VALIDACIÓN + CIERRE", body: "Ruta de ejecución técnica en menos de 24 horas. Listos para operar." }
+            };
+
+            const data = slides[currentSlide];
+
+            return (
+                <div className="min-h-screen bg-black flex flex-col lg:grid lg:grid-cols-12">
+                    {/* IZQUIERDA: CONTENIDO */}
+                    <div className="lg:col-span-7 p-8 md:p-16 flex flex-col justify-between border-r border-white/5 bg-black/40 h-screen">
+                        <header className="cursor-pointer" onClick={() => setCurrentSlide(1)}>
+                            <div className="flex items-baseline">
+                                <span className="text-3xl font-black text-orange-500 uppercase tracking-tighter">nuocho</span>
+                                <span className="text-3xl font-light text-white uppercase tracking-tighter ml-1">estudio</span>
+                            </div>
+                        </header>
+
+                        <main className="fade-in py-12">
+                            <span className="text-[10px] font-black tracking-[0.4em] text-orange-500 border border-orange-500/30 px-3 py-1 rounded-full uppercase bg-orange-500/5 mb-6 inline-block">
+                                {data.sub}
+                            </span>
+                            <h1 className="text-6xl md:text-8xl font-black uppercase leading-[0.85] tracking-tighter mb-8">
+                                {data.title}<br/>
+                                <span className="text-orange-500">{data.highlight}</span>
+                            </h1>
+                            <div className="h-1 w-24 bg-orange-500 mb-8"></div>
+                            <p className="text-lg text-gray-400 leading-relaxed max-w-lg">
+                                {data.body}
+                            </p>
+                        </main>
+
+                        <footer className="pt-8 border-t border-white/5 flex flex-wrap gap-10">
+                            <a href="https://wa.me/573115359253" target="_blank" className="block group">
+                                <p className="text-[8px] font-black uppercase tracking-widest text-orange-500/50 mb-1 group-hover:text-orange-500 transition-colors">WhatsApp Directo</p>
+                                <p className="text-xs font-bold group-hover:text-white transition-colors">311 535 92 53</p>
+                            </a>
+                            <a href="mailto:direccioncreativa@nuocho.com.co" className="block group">
+                                <p className="text-[8px] font-black uppercase tracking-widest text-orange-500/50 mb-1 group-hover:text-orange-500 transition-colors">Email Corporativo</p>
+                                <p className="text-xs font-bold group-hover:text-white transition-colors">direccioncreativa@nuocho.com.co</p>
+                            </a>
+                        </footer>
+                    </div>
+
+                    {/* DERECHA: GALERÍA */}
+                    <div className="lg:col-span-5 bg-[#050505] border-l border-white/5 relative overflow-y-auto h-screen custom-scrollbar">
+                        <div className="p-8 pb-32 space-y-6">
+                            {activeResources.length > 0 ? (
+                                activeResources.map((item) => (
+                                    <div key={item.id} className="group relative aspect-video bg-black border border-white/10 rounded-xl overflow-hidden shadow-2xl transition-all hover:border-orange-500/50">
+                                        {item.type === 'video' ? (
+                                            <video src={item.src} autoPlay muted loop className="w-full h-full object-cover opacity-40 group-hover:opacity-100 transition-opacity" />
+                                        ) : (
+                                            <img src={item.src} className="w-full h-full object-cover opacity-40 group-hover:opacity-100 transition-opacity" />
+                                        )}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
+                                        <div className="absolute bottom-4 left-4">
+                                            <span className="text-[8px] text-orange-500 font-black uppercase tracking-widest block mb-1">{item.category}</span>
+                                            <span className="text-xs font-black uppercase tracking-widest">{item.label}</span>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="h-full flex items-center justify-center opacity-5 select-none pt-20">
+                                    <div className="text-[15rem] font-black tracking-tighter">{currentSlide}</div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* NAVEGACIÓN */}
+                    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 bg-black/80 backdrop-blur-xl p-2 rounded-full border border-white/10 z-50">
+                        {[1, 2, 3, 4, 5].map(n => (
+                            <button 
+                                key={n} 
+                                onClick={() => setCurrentSlide(n)}
+                                className={`w-10 h-10 rounded-full font-black text-[10px] transition-all ${currentSlide === n ? 'bg-orange-500 text-black scale-110 shadow-lg shadow-orange-500/20' : 'text-zinc-600 hover:text-white'}`}
+                            >
+                                0{n}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
