@@ -1,168 +1,93 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NU8 - Presentación Corporativa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background: #000; color: #fff; overflow: hidden; margin: 0; }
+        .slide-enter { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="es"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;NU8 - Presentación Corporativa&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/react@18/umd/react.production.min.js"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/@babel/standalone/babel.min.js"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&amp;display=swap');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>body { font-family: 'Inter', sans-serif; background: #000; color: #fff; overflow: hidden; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.slide-enter { animation: fadeIn 0.5s ease-out forwards; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="root"&gt;&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script type="text/babel"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const { useState } = React;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>const App = () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const [currentSlide, setCurrentSlide] = useState(0);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const slides = [</p>
-<p class="p1"><span class="Apple-converted-space">                </span>// SLIDE 1: MARCA</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>content: (</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="flex flex-col items-center justify-center h-full text-center slide-enter"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h1 className="text-8xl font-black tracking-tighter mb-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>NU&lt;span className="text-blue-500"&gt;8&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div className="flex gap-8 text-sm tracking-[0.3em] uppercase opacity-60"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span&gt;NU = NÚCLEO&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span&gt;∞ = ENERGÍA&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p className="mt-12 text-xl font-light max-w-2xl"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>Experiencias visuales, producción real y soluciones creativas para grandes marcas.</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>)</p>
-<p class="p1"><span class="Apple-converted-space">                </span>},</p>
-<p class="p1"><span class="Apple-converted-space">                </span>// SLIDE 2: PROTOTIPADO Y MEDIOS</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>content: (</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="p-12 h-full slide-enter"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h2 className="text-4xl font-bold mb-8 border-l-4 border-blue-500 pl-4 uppercase tracking-wider"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>Prototipado Rápido &amp; Ejecución</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div className="grid grid-cols-3 gap-6 h-[70%]"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>{/* PROTOTIPADO RÁPIDO */}</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;h3 className="text-blue-400 font-bold mb-4 uppercase text-xs tracking-widest"&gt;01. Prototipado Rápido&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;img<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">                                        </span>src="https://cdn.jsdelivr.net/gh/nuocho/nu8@main/ACABADO%20DE%20PIEZA.jpeg"<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">                                        </span>className="w-full h-48 object-cover rounded-lg mb-4 hover:scale-105 transition-transform"</p>
-<p class="p1"><span class="Apple-converted-space">                                        </span>alt="Acabado"</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-sm opacity-70"&gt;Modelado 3D e impresión de alta precisión para validación de merchandising y POP.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>{/* VIDEOS */}</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;h3 className="text-blue-400 font-bold mb-4 uppercase text-xs tracking-widest"&gt;02. Videos &amp; Activaciones&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;video<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">                                        </span>controls autoPlay muted loop</p>
-<p class="p1"><span class="Apple-converted-space">                                        </span>className="w-full h-48 object-cover rounded-lg mb-4"</p>
-<p class="p1"><span class="Apple-converted-space">                                        </span>src="https://cdn.jsdelivr.net/gh/nuocho/nu8@204a63faf86fab4807fc87d656103d0886b6edc0/3D_FAROLES.mp4"</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-sm opacity-70"&gt;Instalaciones cinéticas y contenido digital para centros comerciales.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>{/* RENDERS */}</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;h3 className="text-blue-400 font-bold mb-4 uppercase text-xs tracking-widest"&gt;03. Renders &amp; 3D&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;img<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">                                        </span>src="https://cdn.jsdelivr.net/gh/nuocho/nu8@main/3D_SENSODYNE.jpeg"<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">                                        </span>className="w-full h-48 object-cover rounded-lg mb-4 opacity-80"</p>
-<p class="p1"><span class="Apple-converted-space">                                        </span>alt="Render"</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-sm opacity-70"&gt;Visualización de alto impacto para Seguros Mundial, Primax y Parque Arauco.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>)</p>
-<p class="p1"><span class="Apple-converted-space">                </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>return (</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="relative h-screen w-screen overflow-hidden bg-black text-white"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{/* Header Persistente / Logo */}</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;nav className="absolute top-0 w-full p-8 flex justify-between items-center z-50"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">                            </span>onClick={() =&gt; setCurrentSlide(0)}</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>className="text-xl font-black tracking-tighter hover:text-blue-500 transition-colors uppercase"</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>nuochoestudio</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="text-[10px] tracking-[0.5em] opacity-40 uppercase"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>Slide {currentSlide + 1} / {slides.length}</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/nav&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{/* Contenido de la Diapositiva */}</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;main className="h-full w-full"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>{slides[currentSlide].content}</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/main&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{/* Navegación y Contacto Persistente */}</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;footer className="absolute bottom-0 w-full p-8 flex justify-between items-end z-50"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="flex gap-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;button<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">                                </span>onClick={() =&gt; setCurrentSlide(prev =&gt; Math.max(0, prev - 1))}</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>className="p-3 border border-zinc-800 rounded-full hover:bg-white hover:text-black transition-all"</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;i className="fas fa-chevron-left"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;button<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">                                </span>onClick={() =&gt; setCurrentSlide(prev =&gt; Math.min(slides.length - 1, prev + 1))}</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>className="p-3 border border-zinc-800 rounded-full hover:bg-white hover:text-black transition-all"</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;i className="fas fa-chevron-right"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                        </span>{/* BLOQUE DE CONTACTO - SIEMPRE VISIBLE */}</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="flex flex-col items-end gap-2 bg-black/50 backdrop-blur-md p-4 rounded-xl border border-zinc-800/50"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;a<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">                                </span>href="https://wa.me/573115359253"<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">                                </span>target="_blank"</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>className="flex items-center gap-3 text-sm font-bold hover:text-green-400 transition-colors"</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;i className="fab fa-whatsapp text-lg"&gt;&lt;/i&gt; 311 535 92 53</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;a<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">                                </span>href="mailto:direccioncreativa@nuocho.com.co"<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">                                </span>className="flex items-center gap-3 text-xs opacity-70 hover:opacity-100 hover:text-blue-400 transition-colors"</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;i className="far fa-envelope"&gt;&lt;/i&gt; direccioncreativa@nuocho.com.co</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/footer&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>const root = ReactDOM.createRoot(document.getElementById('root'));</p>
-<p class="p1"><span class="Apple-converted-space">        </span>root.render(&lt;App /&gt;);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState } = React;
+        const App = () => {
+            const [currentSlide, setCurrentSlide] = useState(0);
+            const slides = [
+                {
+                    content: (
+                        <div className="flex flex-col items-center justify-center h-screen text-center slide-enter">
+                            <h1 className="text-8xl font-black tracking-tighter mb-4">
+                                NU<span className="text-blue-500">8</span>
+                            </h1>
+                            <div className="flex gap-8 text-sm tracking-[0.3em] uppercase opacity-60">
+                                <span>NU = NÚCLEO</span>
+                                <span>∞ = ENERGÍA</span>
+                            </div>
+                            <p className="mt-12 text-xl font-light max-w-2xl px-4">
+                                Experiencias visuales, producción real y soluciones creativas para grandes marcas.
+                            </p>
+                        </div>
+                    )
+                },
+                {
+                    content: (
+                        <div className="p-12 h-screen flex flex-col justify-center slide-enter">
+                            <h2 className="text-4xl font-bold mb-8 border-l-4 border-blue-500 pl-4 uppercase tracking-wider">
+                                Prototipado Rápido & Ejecución
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                                    <h3 className="text-blue-400 font-bold mb-4 uppercase text-xs tracking-widest">01. Prototipado Rápido</h3>
+                                    <img src="https://cdn.jsdelivr.net/gh/nuocho/nu8@main/ACABADO%20DE%20PIEZA.jpeg" className="w-full h-48 object-cover rounded-lg mb-4" />
+                                    <p className="text-sm opacity-70">Modelado 3D e impresión de alta precisión.</p>
+                                </div>
+                                <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                                    <h3 className="text-blue-400 font-bold mb-4 uppercase text-xs tracking-widest">02. Videos & Activaciones</h3>
+                                    <video controls autoPlay muted loop className="w-full h-48 object-cover rounded-lg mb-4" src="https://cdn.jsdelivr.net/gh/nuocho/nu8@204a63faf86fab4807fc87d656103d0886b6edc0/3D_FAROLES.mp4" />
+                                    <p className="text-sm opacity-70">Instalaciones cinéticas para centros comerciales.</p>
+                                </div>
+                                <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                                    <h3 className="text-blue-400 font-bold mb-4 uppercase text-xs tracking-widest">03. Renders & 3D</h3>
+                                    <img src="https://cdn.jsdelivr.net/gh/nuocho/nu8@main/3D_SENSODYNE.jpeg" className="w-full h-48 object-cover rounded-lg mb-4 opacity-80" />
+                                    <p className="text-sm opacity-70">Visualización de alto impacto para marcas líderes.</p>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
+            ];
+            return (
+                <div className="relative h-screen w-screen overflow-hidden bg-black text-white">
+                    <nav className="absolute top-0 w-full p-8 flex justify-between items-center z-50">
+                        <button onClick={() => setCurrentSlide(0)} className="text-xl font-black tracking-tighter hover:text-blue-500 transition-colors uppercase">nuochoestudio</button>
+                        <div className="text-[10px] tracking-[0.5em] opacity-40 uppercase">Slide {currentSlide + 1} / {slides.length}</div>
+                    </nav>
+                    <main className="h-full w-full">{slides[currentSlide].content}</main>
+                    <footer className="absolute bottom-0 w-full p-8 flex justify-between items-end z-50">
+                        <div className="flex gap-4">
+                            <button onClick={() => setCurrentSlide(prev => Math.max(0, prev - 1))} className="p-3 border border-zinc-800 rounded-full hover:bg-white hover:text-black transition-all"><i className="fas fa-chevron-left"></i></button>
+                            <button onClick={() => setCurrentSlide(prev => Math.min(slides.length - 1, prev + 1))} className="p-3 border border-zinc-800 rounded-full hover:bg-white hover:text-black transition-all"><i className="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div className="flex flex-col items-end gap-2 bg-black/50 backdrop-blur-md p-4 rounded-xl border border-zinc-800/50">
+                            <a href="https://wa.me/573115359253" target="_blank" className="flex items-center gap-3 text-sm font-bold hover:text-green-400 transition-colors"><i className="fab fa-whatsapp text-lg"></i> 311 535 92 53</a>
+                            <a href="mailto:direccioncreativa@nuocho.com.co" className="flex items-center gap-3 text-xs opacity-70 hover:opacity-100 hover:text-blue-400 transition-colors"><i className="far fa-envelope"></i> direccioncreativa@nuocho.com.co</a>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
